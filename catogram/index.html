@@ -71,8 +71,12 @@
             {name: "Net Domestic Migration Rate", id: "domesticmigrate", key: "RDOMESTICMIG%d", years: [2011], format: percent},
             {name: "Net Migration Rate", id: "netmigrate", key: "RNETMIG%d", years: [2011], format: percent},
         ],
+        korea = [
+            {name: "(no scale)", id: "none"}],
+        
         fields_list = [
-            usa
+            usa,
+            korea
         ],
         countries = [
             {name : "the USA", id: "usa"},
@@ -98,6 +102,7 @@
         .on("change", function(e) {
             country = countries[this.selectedIndex];
             fields = fields_list[this.selectedIndex];
+            field = fields[0];
             location.hash = "#" + [country.id, field.id, year].join("/");
         });
 
@@ -196,7 +201,7 @@
             path = d3.geo.path()
                 .projection(proj);
                 //console.log(path)
-        console.log(states);
+        //console.log(states);
         states = states.data(features)
             .enter()
             .append("path")
@@ -272,7 +277,7 @@
         // generate the new features, pre-projected
         var features = carto(topology, geometries).features;
 
-        console.log("update",states);
+        //console.log("update",states);
         // update the data
         states.data(features)
             .select("title")
@@ -315,11 +320,20 @@
             desiredFieldId = parts[1],
             desiredYear = +parts[2];
 
-        console.log("hash")
+        //console.log("hash")
         field = fieldsById[desiredFieldId] || fields[0];
         year = (years.indexOf(desiredYear) > -1) ? desiredYear : years[0];
 
         fieldSelect.property("selectedIndex", fields.indexOf(field));
+
+        fieldSelect.selectAll("option").remove();
+
+        fieldSelect.selectAll("option")
+            .data(fields)
+            .enter()
+            .append("option")
+            .attr("value", function(d) { return d.id; })
+            .text(function(d) { return d.name; });
 
         if (field.id === "none") {
 
