@@ -4,6 +4,7 @@
     <title>Cartograms with d3 &amp; TopoJSON</title>
     <meta charset="utf-8">
     <meta property="og:image" content="placeholder.png">
+    <link rel="manifest" href="manifest.json">
     <script src="lib/d3.v3.min.js"></script>
     <script src="lib/colorbrewer.js"></script>
     <script src="lib/topojson.js"></script>
@@ -173,8 +174,8 @@
         parseHash();
     };
 
-    var segmentized = location.search === "?segmentized",
-        url = ["data",
+    var segmentized = location.search === "?segmentized",    
+        url = ["data",  //    url = ["http://52.79.81.229/data",
             segmentized ? "us-states-segmentized.topojson" : "us-states.topojson"   //usually use "data/us-states.topojson"
         ].join("/");
     d3.json(url, function(topo) {

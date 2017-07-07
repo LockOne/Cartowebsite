@@ -82,6 +82,7 @@
                 return objects;
             }
 
+            //iterations starts
             var i = 0;
             while (i++ < iterations) {
                 var areas = objects.map(path.area);
