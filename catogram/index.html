@@ -10,14 +10,7 @@
     <script src="lib/topojson.js"></script>
     <script src="cartogram.js"></script>
     <link rel="stylesheet" href="css/base.css" type="text/css" >
-    <style type="text/css">
-        .county-boundary {
-             fill: none;
-              stroke: #fff;
-                 stroke-width: .5px;
-        } 
-    </style>
-
+    
 </head>
 <body>
 <div id="container">
@@ -72,7 +65,7 @@
             {name: "Net Migration Rate", id: "netmigrate", key: "RNETMIG%d", years: [2011], format: percent},
         ],
         korea = [
-            {name: "(no scale)", id: "none"}],
+            {name: "(no scale)", id: "none"}, {name: "Population Estimate", id: "popest", key: "POPESTIMATE%d"}],
         
         fields_list = [
             usa,
@@ -82,7 +75,10 @@
             {name : "the USA", id: "usa"},
             {name : "Republic of Korea", id: "s_korea"}
         ],
-        years = [2010, 2011],
+        years_usa = [2010, 2011],
+        years_korea = [2012,2013,2014,2015,2016],
+        years_list = [years_usa,years_korea],
+        years = years_list[0],
         fields = fields_list[0],
         fieldsById = d3.nest()
             .key(function(d) { return d.id; })
@@ -98,11 +94,14 @@
     var body = d3.select("body"),
         stat = d3.select("#status");
 
+    var countrychange = false;
     var CountrySelect = d3.select("#country")
         .on("change", function(e) {
             country = countries[this.selectedIndex];
             fields = fields_list[this.selectedIndex];
+            years = years_list[this.selectedIndex];
             field = fields[0];
+            countrychange = true;
             location.hash = "#" + [country.id, field.id, year].join("/");
         });
 
@@ -174,6 +173,8 @@
             .value(function(d) {
                 return +d.properties[field];
             });
+
+  
 
     window.onhashchange = function() {
         parseHash();
@@ -326,15 +327,25 @@
 
         fieldSelect.property("selectedIndex", fields.indexOf(field));
 
-        fieldSelect.selectAll("option").remove();
+        if (countrychange){
+            fieldSelect.selectAll("option").remove();
+            fieldSelect.selectAll("option")
+                .data(fields)
+                .enter()
+                .append("option")
+                .attr("value", function(d) { return d.id; })
+                .text(function(d) { return d.name; });
 
-        fieldSelect.selectAll("option")
-            .data(fields)
-            .enter()
-            .append("option")
-            .attr("value", function(d) { return d.id; })
-            .text(function(d) { return d.name; });
-
+            yearSelect.selectAll("option").remove();
+                yearSelect.selectAll("option")
+                .data(years)
+                .enter()
+                .append("option")
+                .attr("value", function(y) { return y; })
+                .text(function(y) { return y; })
+            countrychange = false;
+        }
+        
         if (field.id === "none") {
 
             yearSelect.attr("disabled", "disabled");
