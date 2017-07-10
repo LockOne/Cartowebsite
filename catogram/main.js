@@ -1,38 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cartograms with d3 &amp; TopoJSON</title>
-    <meta charset="utf-8">
-    <meta property="og:image" content="placeholder.png">
-    <link rel="manifest" href="manifest.json">
-    <script src="lib/d3.v3.min.js"></script>
-    <script src="lib/colorbrewer.js"></script>
-    <script src="lib/topojson.js"></script>
-    <script src="cartogram.js"></script>
-    <link rel="stylesheet" href="css/base.css" type="text/css" >
-    
-</head>
-<body>
-<div id="container">
-    <h1>Cartograms with d3 &amp; TopoJSON</h1>
-    <form>
-        <p>
-            <label>Country <select id="country"></select></label>
-            <label>Scale by <select id="field"></select></label>
-            <label>in <select id="year"></select></label>
-            <span id="status"></span>
-        </p>
-    </form>
-    <div id="map-container">
-        <img id="placeholder" alt="placeholder image for old browsers" src="placeholder.png">
-        <svg id="map"></svg>
-    </div>
-
-</div>
-<<<<<<< HEAD
-<script>
-
-    // hide the form if the browser doesn't do SVG,
+ // hide the form if the browser doesn't do SVG,
     // (then just let everything else fail)
     if (!document.createElementNS) {
         document.getElementsByTagName("form")[0].style.display = "none";
@@ -161,7 +127,7 @@
             "scale(" + [scale, scale] + ")");
     }
 
-    var proj = d3.geo.albers(),
+    var proj = d3.geo.albersUsa(),
         topology,
         geometries,
         rawData,
@@ -175,18 +141,16 @@
                 return +d.properties[field];
             });
 
+  
+
     window.onhashchange = function() {
         parseHash();
-
-
-
     };
 
-   var segmentized = location.search === "?segmentized",    
+    var segmentized = location.search === "?segmentized",    
         url = ["data",  //    url = ["http://52.79.81.229/data",
             segmentized ? "us-states-segmentized.topojson" : "us-states.topojson"   //usually use "data/us-states.topojson"
         ].join("/");
-
     d3.json(url, function(topo) {
         topology = topo;
         geometries = topology.objects.states.geometries;
@@ -200,12 +164,12 @@
         });
     });
 
-
-
     function init() {
         var features = carto.features(topology, geometries),
             path = d3.geo.path()
                 .projection(proj);
+                //console.log(path)
+        //console.log(states);
         states = states.data(features)
             .enter()
             .append("path")
@@ -281,6 +245,7 @@
         // generate the new features, pre-projected
         var features = carto(topology, geometries).features;
 
+        //console.log("update",states);
         // update the data
         states.data(features)
             .select("title")
@@ -323,6 +288,7 @@
             desiredFieldId = parts[1],
             desiredYear = +parts[2];
 
+        //console.log("hash")
         field = fieldsById[desiredFieldId] || fields[0];
         year = (years.indexOf(desiredYear) > -1) ? desiredYear : years[0];
 
@@ -379,10 +345,3 @@
             });
         }
     }
-
-</script>
-=======
-<script src="main.js"></script>
->>>>>>> 2a8f374b2c73a49047308d8e8ce0bfdd15efef1e
-</body>
-</html>
