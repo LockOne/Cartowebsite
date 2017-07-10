@@ -46,7 +46,7 @@
                 x = 0;
                 y = 0;
                 len1 = topology.arcs[i2].length;
-                console.log(len1)
+                //console.log(len1)
                 i1 = 0;
                 out1 = new Array(len1);
                 while(i1<len1){

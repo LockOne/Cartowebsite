@@ -132,7 +132,8 @@ topojson = (function() {
                 Polygon: polygon,
                 MultiPolygon: function(arcs) { arcs.forEach(polygon); }
             };
-
+            console.log(geometryType[o.type]);
+            
             o.type === "GeometryCollection"
                 ? o.geometries.forEach(geometry)
                 : geometry(o);
