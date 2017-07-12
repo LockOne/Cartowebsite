@@ -106,7 +106,7 @@ var topology,
 
 var svg = d3.select("svg");
 
-var url = "data/provinces-topo-simple.json"
+var url = "data/korea.json"
 
 var path = d3.geo.path()
     .projection(projection);
@@ -123,6 +123,7 @@ d3.json(url, function(error, kor) {
                 //console.log("databyID : " , dataById);                                                //You can see how it looks like on the browser; it takes data from csv file by name and make a map;
             init();
         });
+
 /*
   svg.append("g")
     .attr("class", "states")
@@ -152,6 +153,7 @@ d3.json(url, function(error, kor) {
             .append("path")
             .attr("class", "state")
             .attr("id", function(d) {
+                console.log("d :",d);
                 return d.properties.NAME;
             })
             .attr("fill", "#fafafa")

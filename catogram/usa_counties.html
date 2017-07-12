@@ -17,27 +17,57 @@
 
 </style>
 <head>
-    <svg width="960" height="600"></svg>
+    <meta charset="utf-8">
     <title>Cartograms with d3 &amp; TopoJSON</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/topojson.v2.min.js"></script>
 
 </head>
+<body>
+  <form>
+    <p>
+        <label>Scale by <select id="field"></select></label>
+    </p>
+    </form>
+
+  <svg width="960" height="600"></svg>
 
 <script>
+fields = ["states", "counties"];
+field = fields[0];
 
+var fieldSelect = d3.select("#field")
+        .on("change", function(e) {
+            field = fields[this.selectedIndex];
+            location.hash = "#" + [field].join("/");
+        });
+
+fieldSelect.selectAll("option")
+        .data(fields)
+        .enter()
+        .append("option")
+        .attr("value", function(d) { return d; })
+        .text(function(d) { return d; });
 
 var svg = d3.select("svg");
 
 var path = d3.geoPath();
 
-d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
+var scale = "states";
+
+window.onhashchange = function() {
+    parseHash();
+};
+
+function parse_json() {
+  d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
   if (error) throw error;
 
+  console.log(scale);
   svg.append("g")
       .attr("class", "counties")
     .selectAll("path")
-    .data(topojson.feature(us, us.objects.counties).features)
+    .data(topojson.feature(us, us.objects[scale]).features)
     .enter().append("path")
       .attr("d", path);
 
@@ -45,7 +75,28 @@ d3.json("https://d3js.org/us-10m.v1.json", function(error, us) {
       .attr("class", "county-borders")
       .attr("d", path(topojson.mesh(us, us.objects.counties, function(a, b) { return a !== b; })));
 });
+}
 
+function reset_svg(){
+  while (svg.lastChild) {
+    svg.removeChild(svg.lastChild);
+  }
+}
+
+ function parseHash() {
+        var parts = location.hash.substr(1).split("/"),
+            field = parts[0];
+        console.log(parts);
+
+        //console.log("hash")
+        fieldSelect.property("selectedIndex", fields.indexOf(field));
+        scale = field;
+
+        reset_svg();
+        parse_json();
+    }
+
+parse_json();
 </script>
-
+</body>
 </html>

@@ -139,10 +139,8 @@
         parseHash();
     };
 
-    var segmentized = location.search === "?segmentized",    
-        url = ["data",  //    url = ["http://52.79.81.229/data",
-            segmentized ? "us-states-segmentized.topojson" : "us-states.topojson"   //usually use "data/us-states.topojson" (we don't need segmentized)
-        ].join("/");
+    var  url = "data/us-states.topojson";   //usually use "data/us-states.topojson" (we don't need segmentized)
+
     d3.json(url, function(topo) {                                                       //take topo json file
         topology = topo;
         geometries = topology.objects.states.geometries;
