@@ -88,9 +88,10 @@ var width = 960,
     labels;
 
 var projection = d3.geo.mercator()
-      .center([128, 36])
+      .center([128, 36])                                    //latitude and longitude
       .scale(4000)
       .translate([width/2, height/2]);
+
 var topology,
     geometries,
     rawData,

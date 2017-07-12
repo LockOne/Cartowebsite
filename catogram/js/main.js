@@ -140,7 +140,8 @@
     };
 
     var  url = "data/us-states.topojson";   //usually use "data/us-states.topojson" (we don't need segmentized)
-
+    
+    //url ="https://d3js.org/us-10m.v1.json";
     d3.json(url, function(topo) {                                                       //take topo json file
         topology = topo;
         geometries = topology.objects.states.geometries;
@@ -157,7 +158,7 @@
 
 
     function init() {
-                console.log("topology :",topology);
+        console.log("topology :",topology);
         console.log("geo : ",geometries);
         var features = carto.features(topology, geometries),
             path = d3.geo.path()
