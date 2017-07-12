@@ -87,6 +87,13 @@ var width = 960,
     centered,
     labels;
 
+
+//The projection method used is mercator, where the perspective is
+//moved to the provided longitude and latitude and then viewed from above.
+//This coordinate is specified with .center()
+//A higher scale() will zoom in.
+//.translate is horizontal and vertical shift. A value is put in to center the screen on the map.
+//
 var projection = d3.geo.mercator()
       .center([128, 36])                                    //latitude and longitude
       .scale(4000)
@@ -107,11 +114,20 @@ var topology,
 
 var svg = d3.select("svg");
 
+
+//This url specifies a (relative) path to the json file that describes the map/shape of south korea.
+//The json file consists of an id string for each region and the arcs that makes it up.
+//
 var url = "data/korea.json"
 
 var path = d3.geo.path()
     .projection(projection);
 
+
+//d3.json is a function that takes in a json file and handles it to change global variables.
+//d.NAME should refer to the data file that has a column "NAME", which the rows below should be the same as
+//the identifier for the regions specified in "url".
+//
 d3.json(url, function(error, kor) {
     topology = kor,
     geometries = topology.objects.states.geometries;
