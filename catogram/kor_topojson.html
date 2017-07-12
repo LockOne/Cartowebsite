@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Cartograms with d3 &amp; TopoJSON</title>
     <meta charset="utf-8">
-    <meta property="og:image" content="placeholder.png">
-    <link rel="manifest" href="manifest.json">
     <script src="lib/d3.v3.min.js"></script>
     <script src="lib/colorbrewer.js"></script>
     <script src="lib/topojson.js"></script>
+    <script src="lib/topojson.v2.min.js"></script>
     <script src="js/cartogram.js"></script>
     <link rel="stylesheet" href="css/base.css" type="text/css" >
-    
+
+
 </head>
 <body>
 <div id="container">
@@ -25,13 +26,12 @@
         </p>
     </form>
     <div id="map-container">
-        <img id="placeholder" alt="placeholder image for old browsers" src="placeholder.png">
-        <svg id="map"></svg>
+        <svg id="map" width ="960" height = "600"></svg>
     </div>
 
-    <a href = "kor_topojson.html"> Korea map data </a>
-
+    <a href = "index.html"> USA map data </a>
 </div>
-<script src="js/main.js"></script>
+<script src="js/main_kor.js"></script>
+
 </body>
 </html>
