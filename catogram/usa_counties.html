@@ -78,9 +78,7 @@ function parse_json() {
 }
 
 function reset_svg(){
-  while (svg.lastChild) {
-    svg.removeChild(svg.lastChild);
-  }
+  svg.selectAll("*").remove();
 }
 
  function parseHash() {
