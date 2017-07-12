@@ -10,48 +10,17 @@
             var fmt = d3.format(".2f");
             return function(n) { return fmt(n) + "%"; };
         })(),
-
-        usa = [
+        fields = [
             {name: "(no scale)", id: "none"},
-            // {name: "Census Population", id: "censuspop", key: "CENSUS%dPOP", years: [2010]},
-            // {name: "Estimate Base", id: "censuspop", key: "ESTIMATESBASE%d", years: [2010]},
-            {name: "Population Estimate", id: "popest", key: "POPESTIMATE%d"},
-            {name: "Population Change", id: "popchange", key: "NPOPCHG_%d", format: "+,"},
-            {name: "Births", id: "births", key: "BIRTHS%d"},
-            {name: "Deaths", id: "deaths", key: "DEATHS%d"},
-            {name: "Natural Increase", id: "natinc", key: "NATURALINC%d", format: "+,"},
-            {name: "Int'l Migration", id: "intlmig", key: "INTERNATIONALMIG%d", format: "+,"},
-            {name: "Domestic Migration", id: "domesticmig", key: "DOMESTICMIG%d", format: "+,"},
-            {name: "Net Migration", id: "netmig", key: "NETMIG%d", format: "+,"},
-            {name: "Residual", id: "residual", key: "RESIDUAL%d", format: "+,"},
-            {name: "Birth Rate", id: "birthrate", key: "RBIRTH%d", years: [2011], format: percent},
-            {name: "Death Rate", id: "deathrate", key: "RDEATH%d", years: [2011], format: percent},
-            {name: "Natural Increase Rate", id: "natincrate", key: "RNATURALINC%d", years: [2011], format: percent},
-            {name: "Int'l Migration Rate", id: "intlmigrate", key: "RINTERNATIONALMIG%d", years: [2011], format: percent},
-            {name: "Net Domestic Migration Rate", id: "domesticmigrate", key: "RDOMESTICMIG%d", years: [2011], format: percent},
-            {name: "Net Migration Rate", id: "netmigrate", key: "RNETMIG%d", years: [2011], format: percent},
-        ],
-        korea = [
-            {name: "(no scale)", id: "none"}, {name: "Population Estimate", id: "popest", key: "POPESTIMATE%d"}],
-        
-        fields_list = [
-            usa,
-            korea
-        ],
-        countries = [
-            {name : "the USA", id: "usa"},
-            {name : "Republic of Korea", id: "s_korea"}
-        ],
-        years_usa = [2010, 2011],
-        years_korea = [2012,2013,2014,2015,2016],
-        years_list = [years_usa,years_korea],
-        years = years_list[0],
-        fields = fields_list[0],
+            {name: "Population Estimate", id: "popest", key: "POP%d"}],
+
+        years = [2012,2013,2014,2015,2016,2017],
+
         fieldsById = d3.nest()
             .key(function(d) { return d.id; })
             .rollup(function(d) { return d[0]; })
             .map(fields),
-        country = countries[0],
+
         field = fields[0],
         year = years[0],
         colors = colorbrewer.RdYlBu[3]
@@ -61,30 +30,13 @@
     var body = d3.select("body"),
         stat = d3.select("#status");
 
-    var countrychange = false;
-    var CountrySelect = d3.select("#country")
-        .on("change", function(e) {
-            country = countries[this.selectedIndex];
-            fields = fields_list[this.selectedIndex];
-            years = years_list[this.selectedIndex];
-            field = fields[0];
-            countrychange = true;
-            location.hash = "#" + [country.id, field.id, year].join("/");
-        });
-
-    CountrySelect.selectAll("option")
-        .data(countries)
-        .enter()
-        .append("option")
-        .attr("value", function(d) { return d.id; })
-        .text(function(d) { return d.name; });
-
     var fieldSelect = d3.select("#field")
         .on("change", function(e) {
             field = fields[this.selectedIndex];
-            location.hash = "#" + [country.id,field.id, year].join("/");
+            location.hash = "#" + [field.id, year].join("/");
         });
 
+    //when you change field
     fieldSelect.selectAll("option")
         .data(fields)
         .enter()
@@ -95,7 +47,7 @@
     var yearSelect = d3.select("#year")
         .on("change", function(e) {
             year = years[this.selectedIndex];
-            location.hash = "#" + [country.id,field.id, year].join("/");
+            location.hash = "#" + [field.id, year].join("/");
         });
 
     yearSelect.selectAll("option")
@@ -127,49 +79,74 @@
             "scale(" + [scale, scale] + ")");
     }
 
-    var proj = d3.geo.albersUsa(),
-        topology,
-        geometries,
-        rawData,
-        dataById = {},
-        carto = d3.cartogram()
-            .projection(proj)
-            .properties(function(d) {
-                return dataById[d.id];
-            })
-            .value(function(d) {
-                return +d.properties[field];
-            });
+var width = 960,
+    height = 600,
+    initialScale = 50,
+    initialX = width/2,
+    initialY = height/2,
+    centered,
+    labels;
 
-  
+var projection = d3.geo.mercator()
+      .center([128, 36])
+      .scale(4000)
+      .translate([width/2, height/2]);
+var topology,
+    geometries,
+    rawData,
+    dataById = {},
+    carto = d3.cartogram()                                                  //cartogram starts.
+        .projection(projection)
+        .properties(function(d) {
+            return dataById[d.id];
+        })
+        .value(function(d) {
+            return +d.properties[field];
+        });
 
-    window.onhashchange = function() {
-        parseHash();
-    };
+var svg = d3.select("svg");
 
-    var segmentized = location.search === "?segmentized",    
-        url = ["data",  //    url = ["http://52.79.81.229/data",
-            segmentized ? "us-states-segmentized.topojson" : "us-states.topojson"   //usually use "data/us-states.topojson"
-        ].join("/");
-    d3.json(url, function(topo) {
-        topology = topo;
-        geometries = topology.objects.states.geometries;
-        d3.csv("data/nst_2011.csv", function(data) {
+var url = "data/provinces-topo-simple.json"
+
+var path = d3.geo.path()
+    .projection(projection);
+
+d3.json(url, function(error, kor) {
+    topology = kor,
+    geometries = topology.objects.states.geometries;
+    d3.csv("data/korea.csv", function(data) {                                    //take csv file.
             rawData = data;
             dataById = d3.nest()
                 .key(function(d) { return d.NAME; })
                 .rollup(function(d) { return d[0]; })
                 .map(data);
+                //console.log("databyID : " , dataById);                                                //You can see how it looks like on the browser; it takes data from csv file by name and make a map;
             init();
         });
-    });
+/*
+  svg.append("g")
+    .attr("class", "states")
+    .selectAll("path")
+    .data(topojson.feature(kor, kor.objects.states).features)
+    .enter().append("path")
+    .attr("d", path);
+
+  svg.append("path")
+      .attr("class", "state-borders")
+      .attr("d", path(topojson.mesh(kor, kor.objects.states, function(a, b) { return a !== b; })));
+      */
+});
+    //when hash changes
+    window.onhashchange = function() {
+        parseHash();
+    };
 
     function init() {
+
         var features = carto.features(topology, geometries),
             path = d3.geo.path()
-                .projection(proj);
-                //console.log(path)
-        //console.log(states);
+                .projection(projection);
+
         states = states.data(features)
             .enter()
             .append("path")
@@ -191,7 +168,7 @@
 
         var features = carto.features(topology, geometries),
             path = d3.geo.path()
-                .projection(proj);
+                .projection(projection);
 
         states.data(features)
             .transition()
@@ -245,7 +222,6 @@
         // generate the new features, pre-projected
         var features = carto(topology, geometries).features;
 
-        //console.log("update",states);
         // update the data
         states.data(features)
             .select("title")
@@ -285,33 +261,13 @@
 
     function parseHash() {
         var parts = location.hash.substr(1).split("/"),
-            desiredFieldId = parts[1],
-            desiredYear = +parts[2];
+            desiredFieldId = parts[0],
+            desiredYear = +parts[1];
 
-        //console.log("hash")
         field = fieldsById[desiredFieldId] || fields[0];
         year = (years.indexOf(desiredYear) > -1) ? desiredYear : years[0];
 
         fieldSelect.property("selectedIndex", fields.indexOf(field));
-
-        if (countrychange){
-            fieldSelect.selectAll("option").remove();
-            fieldSelect.selectAll("option")
-                .data(fields)
-                .enter()
-                .append("option")
-                .attr("value", function(d) { return d.id; })
-                .text(function(d) { return d.name; });
-
-            yearSelect.selectAll("option").remove();
-                yearSelect.selectAll("option")
-                .data(years)
-                .enter()
-                .append("option")
-                .attr("value", function(y) { return y; })
-                .text(function(y) { return y; })
-            countrychange = false;
-        }
         
         if (field.id === "none") {
 
@@ -338,7 +294,7 @@
                 .attr("disabled", null);
 
             deferredUpdate();
-            location.replace("#" + [country.id, field.id, year].join("/"));
+            location.replace("#" + [field.id, year].join("/"));
 
             hashish.attr("href", function(href) {
                 return href + location.hash;

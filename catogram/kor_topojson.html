@@ -1,67 +1,37 @@
 <!DOCTYPE html>
+<html>
+<head>
     <meta charset="utf-8">
-
-<style>
-.states {
-  fill: black;
-}
-
-.states :hover {
-  fill: red;
-}
-
-.state-borders {
-  fill: none;
-  stroke: #fff;
-  stroke-width: 0.5px;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-  pointer-events: none;
-}
-
-</style>
-<svg width="960" height = "600"></svg>
-<script src="lib/d3.v3.min.js"></script>
-<script src="lib/topojson.v2.min.js"></script>
-<script>
-
-//show kor_topojson file.
-
-var svg = d3.select("svg");
+    <title>Cartograms with d3 &amp; TopoJSON</title>
+    <meta charset="utf-8">
+    <script src="lib/d3.v3.min.js"></script>
+    <script src="lib/colorbrewer.js"></script>
+    <script src="lib/topojson.js"></script>
+    <script src="lib/topojson.v2.min.js"></script>
+    <script src="js/cartogram.js"></script>
+    <link rel="stylesheet" href="css/base.css" type="text/css" >
 
 
-var url = "data/us-states.topojson";
-    url = "data/kor_metropolitan_simplified.json";
-    //url =  "https://d3js.org/us-10m.v1.json";
-var width = 700,
-    height = 700,
-    initialScale = 5500,
-    initialX = -11900,
-    initialY = 4050,
-    centered,
-    labels;
+</head>
+<body>
+<div id="container">
+    <h1>Cartograms with d3 &amp; TopoJSON</h1>
+    <form>
+        <p>
+            <!-- <label>Country <select id="country"></select></label> 
+             temporally I added <select> country </select> but we should seperate it to other html.file -->
+            <label>Scale by <select id="field"></select></label>
+            <label>in <select id="year"></select></label>
+            <span id="status"></span>
+        </p>
+    </form>
+    <div id="map-container">
+        <svg id="map" width ="960" height = "600"></svg>
+    </div>
 
-var projection = d3.geo.mercator()
-    .scale(initialScale)
-    .translate([initialX, initialY]);
+    <a href = "index.html"> USA map data </a>
+</div>
+<script src="js/main_kor.js"></script>
 
-var path = d3.geo.path()
-    .projection(projection);
-
-d3.json(url, function(error, kor) {
-
-  console.log("projection : ", proj.scale());
-
-  svg.append("g")
-    .attr("class", "states")
-    .selectAll("path")
-    .data(topojson.feature(kor, kor.objects.kor_metropolitan).features)
-    .enter().append("path")
-    .attr("d", path);
-
-  svg.append("path")
-      .attr("class", "state-borders")
-      .attr("d", path(topojson.mesh(kor, kor.objects.kor_metropolitan, function(a, b) { return a !== b; })));
-});
-
-</script>
+</body>
+</html>
