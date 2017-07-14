@@ -9,6 +9,7 @@
     <script src="lib/d3.v3.min.js"></script>
     <script src="lib/colorbrewer.js"></script>
     <script src="lib/topojson.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
     <script src="js/cartogram.js"></script>
     <link rel="stylesheet" href="css/base.css" type="text/css">
 </head>
@@ -30,16 +31,32 @@
             </p>
         </form>
         <div id="map-container">
-            <img id="placeholder" alt="placeholder image for old browsers" src="placeholder.png">
+            <form>
+                <input type="file" id="input" onchange="handleFiles(this.files)" value="Browse">
+            </form>
             <svg id="map"></svg>
         </div>
         <a href="kor_topojson.html"> Korea map data </a>
         <br/>
         <a href="usa_counties.html"> USA Counties </a>
         <br/>
-        <a href="take_csv.html">Want to make your own cartogram?</a>
     </div>
-    <script src="js/main.js"></script>
 </body>
+<script type="text/javascript">
+var inputElement = document.getElementById("input");
+inputElement.addEventListener("change", handleFiles, false);
+$(document).ready(function() {
+
+});
+var csv_file;
+
+function handleFiles() {
+    var fileList = this.files;
+    inputElement.style.display = "none";
+    console.log(fileList[0]);
+    csv_file = fileList[0];
+}
+</script>
+<script src="js/main_csv.js"></script>
 
 </html>
