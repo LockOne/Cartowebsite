@@ -9,13 +9,15 @@ body {
         #container {
             width: 800px;
             margin: 20px auto;
+            position: initial;
         }
         /*Styles the main header (Visual Data Studio)*/
         h1 {
             font-size: 200%;
             font-weight: bold;
             color: green;
-            margin: 0 0 15px 0;
+            position: initial;
+            margin: 20px;
         }
 
         h2 {
