@@ -88,7 +88,6 @@
      csv_file,
      text_csv_file;
 
-
  if (window.File && window.FileReader && window.FileList && window.Blob) {
      // Great success! All the File APIs are supported.
  } else {
@@ -99,7 +98,6 @@
  inputElement.addEventListener("change", handleFiles, false);
 
  function handleFiles() {
-     console.log("handlesFiles");
      var fileList = this.files;
      if (fileList == undefined) {
          return;
@@ -184,24 +182,7 @@
  //d.NAME should refer to the data file that has a column "NAME", which the rows below should be the same as
  //the identifier for the regions specified in "url".
  //
- d3.json(url, function(error, kor) {
-     topology = kor,
-         geometries = topology.objects.states.geometries;
-     d3.csv("data/korea.csv", function(data) { //take csv file.
-         rawData = data;
-         dataById = d3.nest()
-             .key(function(d) {
-                 return d.NAME;
-             })
-             .rollup(function(d) {
-                 return d[0];
-             })
-             .map(data);
-         console.log("databyID : ", dataById); //You can see how it looks like on the browser; it takes data from csv file by name and make a map;
 
-         init();
-     });
- });
 
  function parse_json(str) {
      svg.selectAll("*").remove();
@@ -230,7 +211,6 @@
                      return d[0];
                  })
                  .map(parsed_data);
-             console.log("databyID : ", dataById); //You can see how it looks like on the browser; it takes data from csv file by name and make a map;
 
              init();
          });
@@ -247,8 +227,15 @@
      var features = carto.features(topology, geometries),
          path = d3.geo.path()
          .projection(projection);
-     console.log(features);
-     console.log("states_b4:", states);
+
+
+        map = d3.select("#map");
+        layer = map.append("g")
+            .attr("id", "layer");
+        states = layer.append("g")
+            .attr("id", "states")
+            .selectAll("path");
+
      states = states.data(features)
          .enter()
          .append("path")
@@ -260,8 +247,6 @@
          .attr("d", path);
 
      states.append("title");
-     console.log(states);
-
      parseHash();
  }
 
