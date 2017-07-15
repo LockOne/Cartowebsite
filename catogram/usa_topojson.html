@@ -36,7 +36,7 @@ d3.json("data/us_counties.json", function(error, kor) {
 
   svg.append("path")
       .attr("class", "state-borders")
-      .attr("d", path(topojson.mesh(kor, kor.objects.states, function(a, b) { return a !== b; })));
+      .attr("d", path(topojson.mesh(us, us.objects.states, function(a, b) { return a !== b; })));
 });
 
 </script>
