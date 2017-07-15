@@ -41,22 +41,7 @@
         <a href="usa_counties.html"> USA Counties </a>
         <br/>
     </div>
+    <script src="js/main_csv.js"></script>
 </body>
-<script type="text/javascript">
-var inputElement = document.getElementById("input");
-inputElement.addEventListener("change", handleFiles, false);
-$(document).ready(function() {
-
-});
-var csv_file;
-
-function handleFiles() {
-    var fileList = this.files;
-    inputElement.style.display = "none";
-    console.log(fileList[0]);
-    csv_file = fileList[0];
-}
-</script>
-<script src="js/main_csv.js"></script>
 
 </html>
