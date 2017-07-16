@@ -1,3 +1,5 @@
+/*Tabs: https://www.w3schools.com/
+howto/tryit.asp?filename=tryhow_css_js_dropdown_hover*/
 body {
         font-family: Garamond, Baskerville, "Times New Roman", serif;
         font-size: 16px;
@@ -72,8 +74,8 @@ body {
         }
         /*Styles the tabs on the top of the screen*/
         .dropbtn {
-            background-color: #4CAF50;
-            color: white;
+            background-color: #008a00/*#4CAF50*/;
+            color: #fff;
             padding: 16px;
             font-size: 16px;
             border: none;
