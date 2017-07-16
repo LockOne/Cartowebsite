@@ -26,7 +26,7 @@
          return d.id;
      })
      .rollup(function(d) {
-	     return d[0];
+         return d[0];
      })
      .map(fields),
 
@@ -37,44 +37,10 @@
      .map(function(rgb) {
          return d3.hsl(rgb);
      });
+ var fieldSelect,yearSelect;
 
  var body = d3.select("body"),
      stat = d3.select("#status");
-
- var fieldSelect = d3.select("#field")
-     .on("change", function(e) {
-         field = fields[this.selectedIndex];
-         location.hash = "#" + [field.id, year].join("/");
-     });
-
- //when you change field
- fieldSelect.selectAll("option")
-     .data(fields)
-     .enter()
-     .append("option")
-     .attr("value", function(d) {
-         return d.id;
-     })
-     .text(function(d) {
-         return d.name;
-     });
-
- var yearSelect = d3.select("#year")
-     .on("change", function(e) {
-         year = years[this.selectedIndex];
-         location.hash = "#" + [field.id, year].join("/");
-     });
-
- yearSelect.selectAll("option")
-     .data(years)
-     .enter()
-     .append("option")
-     .attr("value", function(y) {
-         return y;
-     })
-     .text(function(y) {
-         return y;
-     })
 
  var map = d3.select("#map"),
      zoom = d3.behavior.zoom()
@@ -106,7 +72,7 @@
          return;
      }
      inputElement.style.display = "none";
-     document.getElementById("explanation").style.display ="none";
+     document.getElementById("explanation").style.display = "none";
      csv_file = fileList[0];
 
      parse_csv(csv_file, parse_json);
@@ -195,9 +161,9 @@
          d3.json(url, function(error, kor) {
              topology = kor,
                  geometries = topology.objects.states.geometries;
- 		
-		 var data = d3.csv.parseRows(str); //built-in function that splits the rows
-              rawData = data;
+
+             var data = d3.csv.parseRows(str); //built-in function that splits the rows
+             rawData = data;
              var parsed_data = new Array();
              var division = data[0];
              for (var i = 1; i < data.length; i++) {
@@ -208,7 +174,18 @@
                  }
                  parsed_data.push(temp_Object);
              }
-             dataById = d3.nest() 
+             console.log(parsed_data[0]);
+             years = [];
+             var years_parsed = Object.keys(parsed_data[0]);
+             for(var i = 0; i < years_parsed.length;i++){
+                if(years_parsed[i] == "NAME"){
+                    continue;
+                } else{
+                    years.push(parseInt(years_parsed[i].substr(4,15)));
+                }
+             }
+             console.log(years);
+             dataById = d3.nest()
                  .key(function(d) {
                      return d.NAME;
                  })
@@ -233,13 +210,46 @@
          path = d3.geo.path()
          .projection(projection);
 
+     fieldSelect = d3.select("#field")
+         .on("change", function(e) {
+             field = fields[this.selectedIndex];
+             location.hash = "#" + [field.id, year].join("/");
+         });
 
-        map = d3.select("#map");
-        layer = map.append("g")
-            .attr("id", "layer");
-        states = layer.append("g")
-            .attr("id", "states")
-            .selectAll("path");
+     //when you change field
+     fieldSelect.selectAll("option")
+         .data(fields)
+         .enter()
+         .append("option")
+         .attr("value", function(d) {
+             return d.id;
+         })
+         .text(function(d) {
+             return d.name;
+         });
+
+     yearSelect = d3.select("#year")
+         .on("change", function(e) {
+             year = years[this.selectedIndex];
+             location.hash = "#" + [field.id, year].join("/");
+         });
+
+     yearSelect.selectAll("option")
+         .data(years)
+         .enter()
+         .append("option")
+         .attr("value", function(y) {
+             return y;
+         })
+         .text(function(y) {
+             return y;
+         })
+     map = d3.select("#map");
+     layer = map.append("g")
+         .attr("id", "layer");
+     states = layer.append("g")
+         .attr("id", "states")
+         .selectAll("path");
 
      states = states.data(features)
          .enter()
