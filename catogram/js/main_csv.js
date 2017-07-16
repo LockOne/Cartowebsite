@@ -12,9 +12,11 @@
              return fmt(n) + "%";
          };
      })(),
+
+     //definition for the array of fields in the dropdown menu.
      fields = [
          { name: "(no scale)", id: "none" },
-         { name: "Population Estimate", id: "popest", key: "POP%d" }
+         { name: "My Data", id: "mydata", key: "DATA%d" }
      ],
 
      years = [2012, 2013, 2014, 2015, 2016, 2017],
@@ -24,7 +26,7 @@
          return d.id;
      })
      .rollup(function(d) {
-         return d[0];
+	     return d[0];
      })
      .map(fields),
 
@@ -97,6 +99,7 @@
  var inputElement = document.getElementById("input");
  inputElement.addEventListener("change", handleFiles, false);
 
+ //This function handles the uploaded csv file by the user, for the map Korea.
  function handleFiles() {
      var fileList = this.files;
      if (fileList == undefined) {
@@ -108,6 +111,7 @@
      parse_csv(csv_file, parse_json);
  }
 
+ //This function takes the text of csv file and passes it to the parse json function.
  function parse_csv(csv_file, callback) {
      if (csv_file) {
          var reader = new FileReader();
@@ -178,20 +182,20 @@
      .projection(projection);
 
 
- //d3.json is a function that takes in a json file and handles it to change global variables.
- //d.NAME should refer to the data file that has a column "NAME", which the rows below should be the same as
- //the identifier for the regions specified in "url".
- //
 
-
+ //parse_json takes in the entire text string of the csv file
  function parse_json(str) {
-     svg.selectAll("*").remove();
+
+     svg.selectAll("*").remove(); //make new map by removing previous information
 
      if (str == undefined) {} else {
+
+
          d3.json(url, function(error, kor) {
              topology = kor,
                  geometries = topology.objects.states.geometries;
-             var data = d3.csv.parseRows(str);
+ 		
+		 var data = d3.csv.parseRows(str); //built-in function that splits the rows
               rawData = data;
              var parsed_data = new Array();
              var division = data[0];
@@ -203,7 +207,7 @@
                  }
                  parsed_data.push(temp_Object);
              }
-             dataById = d3.nest()
+             dataById = d3.nest() 
                  .key(function(d) {
                      return d.NAME;
                  })
