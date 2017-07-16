@@ -68,6 +68,7 @@
         states = layer.append("g")
             .attr("id", "states")
             .selectAll("path");
+                 console.log("states_b3:", states);
 
     // map.call(zoom);
     updateZoom();
@@ -128,6 +129,7 @@ var path = d3.geo.path()
 //d.NAME should refer to the data file that has a column "NAME", which the rows below should be the same as
 //the identifier for the regions specified in "url".
 //
+
 d3.json(url, function(error, kor) {
     topology = kor,
     geometries = topology.objects.states.geometries;
@@ -137,7 +139,8 @@ d3.json(url, function(error, kor) {
                 .key(function(d) { return d.NAME; })
                 .rollup(function(d) { return d[0]; })
                 .map(data);
-                //console.log("databyID : " , dataById);                                                //You can see how it looks like on the browser; it takes data from csv file by name and make a map;
+                console.log("databyID : " , dataById);                                                //You can see how it looks like on the browser; it takes data from csv file by name and make a map;
+
             init();
         });
 
@@ -170,13 +173,13 @@ d3.json(url, function(error, kor) {
             .append("path")
             .attr("class", "state")
             .attr("id", function(d) {
-                console.log("d :",d);
                 return d.properties.NAME;
             })
             .attr("fill", "#fafafa")
             .attr("d", path);
 
         states.append("title");
+     console.log("states: ", states);
 
         parseHash();
     }
