@@ -12,6 +12,13 @@
     <script src="lib/jquery-3.2.1.min.js"></script>
     <script src="js/cartogram.js"></script>
     <link rel="stylesheet" href="css/base.css" type="text/css">
+    <style>
+    #names > p {
+        font-size : 10px;
+        margin:0;
+        padding:0;
+    }
+    </style>
 </head>
 
 <body>
@@ -30,9 +37,15 @@
                 <span id="status"></span>
             </p>
         </form>
+        <div id="explanation">
                 <p> Upload your korea.csv file here!</p>
-		<p> One column of the csv must have the title "NAME", and the rows of that column must include: </p>
-
+		<p> One column of the csv must have the title "NAME", and the rows of that column must include: </p> 
+        <table>
+        <tr>
+        <td><img display="inline-block" src="data/format_for_Korea_csv.png" width="450"></td><td id="names"><p>NAME</p><p>Seoul</p><p>Busan</p><p>Daegu</p><p>Incheon</p><p>Gwangju</p><p>Daejeon</p><p>Ulsan</p><p>Sejong</p><p>Gyeonggi</p><p>Gangwon</p><p>Chungbuk</p><p>Chungnam</p><p>Jeonbuk</p><p>Jeonnam</p><p>Gyeongbuk</p><p>Gyeongnam</p><p>Jeju</p></td>
+        </tr>       
+        </table>
+        </div>
         <div id="map-container">
             <form>
                 <input type="file" id="input" onchange="handleFiles(this.files)" value="Browse">

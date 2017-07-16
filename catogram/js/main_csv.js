@@ -106,6 +106,7 @@
          return;
      }
      inputElement.style.display = "none";
+     document.getElementById("explanation").style.display ="none";
      csv_file = fileList[0];
 
      parse_csv(csv_file, parse_json);
