@@ -12,9 +12,11 @@
              return fmt(n) + "%";
          };
      })(),
+
+     //definition for the array of fields in the dropdown menu.
      fields = [
          { name: "(no scale)", id: "none" },
-         { name: "Population Estimate", id: "popest", key: "POP%d" }
+         { name: "My Data", id: "mydata", key: "DATA%d" }
      ],
 
      years = [2012, 2013, 2014, 2015, 2016, 2017],
@@ -35,44 +37,10 @@
      .map(function(rgb) {
          return d3.hsl(rgb);
      });
+ var fieldSelect,yearSelect;
 
  var body = d3.select("body"),
      stat = d3.select("#status");
-
- var fieldSelect = d3.select("#field")
-     .on("change", function(e) {
-         field = fields[this.selectedIndex];
-         location.hash = "#" + [field.id, year].join("/");
-     });
-
- //when you change field
- fieldSelect.selectAll("option")
-     .data(fields)
-     .enter()
-     .append("option")
-     .attr("value", function(d) {
-         return d.id;
-     })
-     .text(function(d) {
-         return d.name;
-     });
-
- var yearSelect = d3.select("#year")
-     .on("change", function(e) {
-         year = years[this.selectedIndex];
-         location.hash = "#" + [field.id, year].join("/");
-     });
-
- yearSelect.selectAll("option")
-     .data(years)
-     .enter()
-     .append("option")
-     .attr("value", function(y) {
-         return y;
-     })
-     .text(function(y) {
-         return y;
-     })
 
  var map = d3.select("#map"),
      zoom = d3.behavior.zoom()
@@ -97,17 +65,20 @@
  var inputElement = document.getElementById("input");
  inputElement.addEventListener("change", handleFiles, false);
 
+ //This function handles the uploaded csv file by the user, for the map Korea.
  function handleFiles() {
      var fileList = this.files;
      if (fileList == undefined) {
          return;
      }
      inputElement.style.display = "none";
+     document.getElementById("explanation").style.display = "none";
      csv_file = fileList[0];
 
      parse_csv(csv_file, parse_json);
  }
 
+ //This function takes the text of csv file and passes it to the parse json function.
  function parse_csv(csv_file, callback) {
      if (csv_file) {
          var reader = new FileReader();
@@ -178,21 +149,21 @@
      .projection(projection);
 
 
- //d3.json is a function that takes in a json file and handles it to change global variables.
- //d.NAME should refer to the data file that has a column "NAME", which the rows below should be the same as
- //the identifier for the regions specified in "url".
- //
 
-
+ //parse_json takes in the entire text string of the csv file
  function parse_json(str) {
-     svg.selectAll("*").remove();
+
+     svg.selectAll("*").remove(); //make new map by removing previous information
 
      if (str == undefined) {} else {
+
+
          d3.json(url, function(error, kor) {
              topology = kor,
                  geometries = topology.objects.states.geometries;
-             var data = d3.csv.parseRows(str);
-              rawData = data;
+
+             var data = d3.csv.parseRows(str); //built-in function that splits the rows
+             rawData = data;
              var parsed_data = new Array();
              var division = data[0];
              for (var i = 1; i < data.length; i++) {
@@ -203,6 +174,17 @@
                  }
                  parsed_data.push(temp_Object);
              }
+             console.log(parsed_data[0]);
+             years = [];
+             var years_parsed = Object.keys(parsed_data[0]);
+             for(var i = 0; i < years_parsed.length;i++){
+                if(years_parsed[i] == "NAME"){
+                    continue;
+                } else{
+                    years.push(parseInt(years_parsed[i].substr(4,15)));
+                }
+             }
+             console.log(years);
              dataById = d3.nest()
                  .key(function(d) {
                      return d.NAME;
@@ -228,13 +210,46 @@
          path = d3.geo.path()
          .projection(projection);
 
+     fieldSelect = d3.select("#field")
+         .on("change", function(e) {
+             field = fields[this.selectedIndex];
+             location.hash = "#" + [field.id, year].join("/");
+         });
 
-        map = d3.select("#map");
-        layer = map.append("g")
-            .attr("id", "layer");
-        states = layer.append("g")
-            .attr("id", "states")
-            .selectAll("path");
+     //when you change field
+     fieldSelect.selectAll("option")
+         .data(fields)
+         .enter()
+         .append("option")
+         .attr("value", function(d) {
+             return d.id;
+         })
+         .text(function(d) {
+             return d.name;
+         });
+
+     yearSelect = d3.select("#year")
+         .on("change", function(e) {
+             year = years[this.selectedIndex];
+             location.hash = "#" + [field.id, year].join("/");
+         });
+
+     yearSelect.selectAll("option")
+         .data(years)
+         .enter()
+         .append("option")
+         .attr("value", function(y) {
+             return y;
+         })
+         .text(function(y) {
+             return y;
+         })
+     map = d3.select("#map");
+     layer = map.append("g")
+         .attr("id", "layer");
+     states = layer.append("g")
+         .attr("id", "states")
+         .selectAll("path");
 
      states = states.data(features)
          .enter()

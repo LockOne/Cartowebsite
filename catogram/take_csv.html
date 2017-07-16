@@ -30,8 +30,33 @@
                 <span id="status"></span>
             </p>
         </form>
-                <p> Upload your korea.csv file here!</p>
-
+        <div id="explanation">
+            <p> Upload your korea.csv file here!</p>
+            <p> One column of the csv must have the title "NAME", and the rows of that column must include:  (copy and paste!)</p>
+            <table>
+                <tr>
+                    <td><img display="inline-block" src="data/format_for_Korea_csv.png" width="450"></td>
+                    <td id="names">NAME
+                        <br>Seoul
+                        <br>Busan
+                        <br>Daegu
+                        <br>Incheon
+                        <br>Gwangju
+                        <br>Daejeon
+                        <br>Ulsan
+                        <br>Sejong
+                        <br>Gyeonggi
+                        <br>Gangwon
+                        <br>Chungbuk
+                        <br>Chungnam
+                        <br>Jeonbuk
+                        <br>Jeonnam
+                        <br>Gyeongbuk
+                        <br>Gyeongnam
+                        <br>Jeju</td>
+                </tr>
+            </table>
+        </div>
         <div id="map-container">
             <form>
                 <input type="file" id="input" onchange="handleFiles(this.files)" value="Browse">
