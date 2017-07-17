@@ -32,8 +32,9 @@
             {name: "Net Migration Rate", id: "netmigrate", key: "RNETMIG%d", years: [2011], format: percent},
         ],
         korea = [
-            {name: "(no scale)", id: "none"}, {name: "Population Estimate", id: "popest", key: "POPESTIMATE%d"}],
-        
+            {name: "(no scale)", id: "none"},
+            {name: "Population Estimate", id: "popest", key: "POPESTIMATE%d"}],
+
         fields_list = [
             usa,
             korea
@@ -133,14 +134,14 @@
                 return +d.properties[field];
             });
 
-  
+
     //when hash changes
     window.onhashchange = function() {
         parseHash();
     };
 
     var  url = "data/us-states.topojson";   //usually use "data/us-states.topojson" (we don't need segmentized)
-    
+
     //url ="https://d3js.org/us-10m.v1.json";
     d3.json(url, function(topo) {                                                       //take topo json file
         topology = topo;
@@ -290,7 +291,7 @@
         year = (years.indexOf(desiredYear) > -1) ? desiredYear : years[0];
 
         fieldSelect.property("selectedIndex", fields.indexOf(field));
-        
+
         if (field.id === "none") {
 
             yearSelect.attr("disabled", "disabled");
