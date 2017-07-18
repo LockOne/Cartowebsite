@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visual Data Studio</title>
+    <meta charset="utf-8">
+    <meta property="og:image" content="placeholder.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="lib/d3.v3.min.js"></script>
+    <script src="lib/colorbrewer.js"></script>
+    <script src="lib/topojson.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
+    <script src="js/cartogram.js"></script>
+    <link rel="stylesheet" href="css/base.css" type="text/css">
+</head>
+
+<body>
+    <div id="container">
+        <h1>Upload your own cartogram!</h1>
+        <form>
+            <p>
+                <!-- <label>Country <select id="country"></select></label>
+             temporally I added <select> country </select> but we should seperate it to other html.file -->
+                <label>Scale by
+                    <select id="field"></select>
+                </label>
+                <label>in
+                    <select id="year"></select>
+                </label>
+                <span id="status"></span>
+            </p>
+        </form>
+        <div id="explanation">
+            <p> Upload your korea.csv file here!</p>
+            <p> One column of the csv must have the title "NAME", and the rows of that column must include:  (copy and paste!)</p>
+            <table>
+                <tr>
+                    <td><img display="inline-block" src="data/format_for_Korea_csv.png" width="450"></td>
+                    <td id="names">NAME
+                        <br>Seoul
+                        <br>Busan
+                        <br>Daegu
+                        <br>Incheon
+                        <br>Gwangju
+                        <br>Daejeon
+                        <br>Ulsan
+                        <br>Sejong
+                        <br>Gyeonggi
+                        <br>Gangwon
+                        <br>Chungbuk
+                        <br>Chungnam
+                        <br>Jeonbuk
+                        <br>Jeonnam
+                        <br>Gyeongbuk
+                        <br>Gyeongnam
+                        <br>Jeju</td>
+                </tr>
+            </table>
+        </div>
+        <div id="map-container">
+            <form>
+                <input type="file" id="input" onchange="handleFiles(this.files)" value="Browse">
+            </form>
+            <svg id="map"></svg>
+        </div>
+        <a href="kor_topojson.html"> Korea map data </a>
+        <br/>
+        <a href="usa_counties.html"> USA Counties </a>
+        <br/>
+    </div>
+    <script src="js/main_csv.js"></script>
+</body>
+
+</html>
