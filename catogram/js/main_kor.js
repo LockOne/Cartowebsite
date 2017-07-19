@@ -4,19 +4,20 @@
      document.getElementsByTagName("form")[0].style.display = "none";
  }
 
- var itera_button = 8;
  var year_timer = false,
-     idx = 0;
+     carto_timer = false,
+     idx = 0,
+     field_selected = 0;
 
  function year_iter() {
      if (year_timer) {
          clearTimeout(year_timer);
          year_timer = false;
-         document.getElementById("year_button").value = "year_iteration"
+         document.getElementById("year_button").value = "year_iteration";
 
      } else {
          year_timer = setInterval(year_iteration, 500);
-         document.getElementById("year_button").value = "stop"
+         document.getElementById("year_button").value = "Stop";
      }
  }
 
@@ -31,7 +32,27 @@
  }
 
  function carto_animation() {
+     if (carto_timer) {
+         clearTimeout(carto_timer);
+         carto_timer = false;
+         document.getElementById("animation_button").value = "cartogram animation";
+     } else {
+         field_selected = document.getElementById("field").selectedIndex
+         carto_timer = setInterval(carto_animation_iteration, 800);
+         document.getElementById("animation_button").value = "Stop";
+     }
+ }
 
+ function carto_animation_iteration() {
+     if (document.getElementById("field").selectedIndex == 0) {
+         field = fields[field_selected];
+     } else {
+         field = fields[0];
+     }
+
+     console.log(field_selected);
+     location.hash = "#" + [field.id, year].join("/");
+     parseHash();
  }
 
  // field definitions from:
