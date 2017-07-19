@@ -11,37 +11,47 @@
     <script src="lib/topojson.js"></script>
     <script src="js/cartogram.js"></script>
     <link href="css/base.css" type="text/css" rel="stylesheet">
-    <link href="css/w3-colors-windows.css" type ="text/css" rel="stylesheet">
-    <link rel="stylesheet" href="css/base.css" type="text/css">
+    <link href="css/w3-colors-windows.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
     <h1>Visual Data Studio</h1>
-    <div id="container">
-    <form>
-        <p>
-
+    <div id="container">  
+        <form>
+            <p>
                 <label>Scale by
                     <select id="field"></select>
                 </label>
                 <label>in
                     <select id="year"></select>
                 </label>
-                <span id="status"></span>
+                <input type="button" onclick="year_iter()" id="year_button" value="year iteration"></input>
+                <input type="button" onclick="carto_animation()" id="animation_button" value="cartogram animation"></input>
+                <!-- <div class="scaledropdown">
+         <button class="scalebtn">Scale by <select id="field"></select></button>
+       </div>
+       <div class="yeardropdown">
+             <button class = "yearbtn">Year <select id="year"></select></button>
+           </div>
+             -->
+                <div class="dropdown">
+                    <button class="dropbtn">Other Countries</button>
+                    <div class="dropdown-content">
+                        <a href="kor_topojson.html"> Korea </a>
+                        <a href="usa_counties.html"> USA - Counties </a>
+                        <a href="take_csv.html">Want to make your own cartogram?</a>
+                    </div>
+                </div>
             </p>
         </form>
         <div id="map-container">
             <img id="placeholder" alt="placeholder image for old browsers" src="placeholder.png">
             <svg id="map"></svg>
         </div>
-        <a href="kor_topojson.html"> Korea map data </a>
-        <br/>
-        <a href="usa_counties.html"> USA Counties </a>
-        <br/>
-        <a href="take_csv.html">Want to make your own cartogram?</a>
     </div>
 
 <script src="js/main.js"></script>
+
 </body>
 
 </html>

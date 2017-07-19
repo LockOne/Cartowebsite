@@ -25,68 +25,58 @@ body {
             margin: 20px;
         }
 
+        h2 {
+            font-size: 160%;
+            margin: 0 0 10px 0;
+        }
 
-#container {
-    width: 800px;
-    margin: 20px auto;
-}
+        p {
+            margin: 0 0 10px;
+        }
 
-h1 {
-    font-size: 200%;
-    margin: 0 0 15px 0;
-}
+        form, form > * {
+            margin: 0;
+        }
 
-h2 {
-    font-size: 160%;
-    margin: 0 0 10px 0;
-}
+        #status {
+            color: #999;
+        }
 
-p {
-    margin: 0 0 10px;
-}
+        #map-container {
+            height: 600px;
+            text-align: center;
+            position: relative;
+            margin: 20px 0;
+        }
 
+        #map {
+            display: block;
+            position: absolute;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
 
+        path.state {
+            stroke: #666;
+            stroke-width: .5;
+        }
 
-#status {
-    color: #999;
-}
+        path.state:hover {
+            stroke: #000;
+        }
 
-#map-container {
-    height: 600px;
-    text-align: center;
-    position: relative;
-    margin: 20px 0;
-}
+        form {
+            font-size: 120%;
+        }
 
-<<<<<<< HEAD
-#map {
-    display: block;
-    position: absolute;
-    background: #fff;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-}
-
-path.state {
-    stroke: #666;
-    stroke-width: .5;
-}
-
-path.state:hover {
-    stroke: #000;
-}
-
-form {
-    font-size: 120%;
-}
-=======
         select {
             font-size: inherit;
             margin: auto;
         }
         /*Styles the tabs on the top of the screen*/
-        .dropbtn {
+        .dropbtn, .scalebtn, .yearbtn {
           /*  background-color: #4CAF50;*/
             color:#fff;
             background-color:#60a917;
@@ -95,19 +85,8 @@ form {
             border: none;
             cursor: pointer;
           }
->>>>>>> websitedesign
 
-          .scalebtn {
-            /*  background-color: #4CAF50; */
-              color:#fff;
-              background-color:#008a00;
-              padding: 16px;
-              font-size: 16px;
-              border: none;
-              cursor: pointer;
-            }
-
-        .dropdown {
+        .dropdown, .scaledropdown, .yeardropdown {
             position: relative;
             display: inline-block;
           }
@@ -151,14 +130,3 @@ form {
             left: 0;
             top: 0;
         }
-select {
-    font-size: inherit;
-}
-
-#placeholder {
-    position: absolute;
-    z-index: -1;
-    display: block;
-    left: 0;
-    top: 0;
-}
