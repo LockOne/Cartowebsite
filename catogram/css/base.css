@@ -1,3 +1,5 @@
+/*Tabs: https://www.w3schools.com/
+howto/tryit.asp?filename=tryhow_css_js_dropdown_hover*/
 body {
         font-family: Garamond, Baskerville, "Times New Roman", serif;
         font-size: 16px;
@@ -9,13 +11,18 @@ body {
         #container {
             width: 800px;
             margin: 20px auto;
+            position: initial;
         }
         /*Styles the main header (Visual Data Studio)*/
         h1 {
-            font-size: 200%;
+            font-size: 250%;
             font-weight: bold;
+            line-height: 33px;
+            letter-spacing: 3px;
             color: green;
-            margin: 0 0 15px 0;
+            position: initial;
+            width: 150px;
+            margin: 20px;
         }
 
 
@@ -51,6 +58,7 @@ p {
     margin: 20px 0;
 }
 
+<<<<<<< HEAD
 #map {
     display: block;
     position: absolute;
@@ -72,7 +80,70 @@ path.state:hover {
 form {
     font-size: 120%;
 }
+=======
+        select {
+            font-size: inherit;
+            margin: auto;
+        }
+        /*Styles the tabs on the top of the screen*/
+        .dropbtn {
+          /*  background-color: #4CAF50;*/
+            color:#fff;
+            background-color:#60a917;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+          }
+>>>>>>> websitedesign
 
+          .scalebtn {
+            /*  background-color: #4CAF50; */
+              color:#fff;
+              background-color:#008a00;
+              padding: 16px;
+              font-size: 16px;
+              border: none;
+              cursor: pointer;
+            }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+          }
+          /*Styles the background of the dropdown content*/
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            /*background-color: #f9f9f9; */
+            background-color:#a4c400;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+          }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+          }
+          /*styles the dropdown content when hovered*/
+        .dropdown-content a:hover {
+        /*background-color: #f1f1f1 */
+          background-color: #33cc33;
+      }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+          }
+
+        /*Style the button when hovered*/
+        .dropdown:hover .dropbtn {
+          /*  background-color: #3e8e41; */
+              background-color: #008a00;
+          }
+        /* End of tab styling */
         #placeholder {
             position: absolute;
             z-index: -1;
