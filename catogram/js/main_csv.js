@@ -4,6 +4,13 @@
      document.getElementsByTagName("form")[0].style.display = "none";
  }
 
+
+ var canvas = document.querySelector("canvas"),
+     context = canvas.getContext("2d");
+
+ function save() {
+     window.open('', document.getElementById('mycanvas').toDataURL());
+ }
  // field definitions from:
  // <http://www.census.gov/popest/data/national/totals/2011/files/NST-EST2011-alldata.pdf>
  var percent = (function() {
@@ -37,7 +44,7 @@
      .map(function(rgb) {
          return d3.hsl(rgb);
      });
- var fieldSelect,yearSelect;
+ var fieldSelect, yearSelect;
 
  var body = d3.select("body"),
      stat = d3.select("#status");
@@ -177,12 +184,12 @@
              console.log(parsed_data[0]);
              years = [];
              var years_parsed = Object.keys(parsed_data[0]);
-             for(var i = 0; i < years_parsed.length;i++){
-                if(years_parsed[i] == "NAME"){
-                    continue;
-                } else{
-                    years.push(parseInt(years_parsed[i].substr(4,15)));
-                }
+             for (var i = 0; i < years_parsed.length; i++) {
+                 if (years_parsed[i] == "NAME") {
+                     continue;
+                 } else {
+                     years.push(parseInt(years_parsed[i].substr(4, 15)));
+                 }
              }
              console.log(years);
              dataById = d3.nest()

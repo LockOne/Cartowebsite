@@ -20,22 +20,17 @@ path:hover {
     <title>Cartograms with d3 &amp; TopoJSON</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/topojson.v2.min.js"></script>
-<<<<<<< HEAD
-=======
     <link rel="stylesheet" href="css/base.css" type="text/css" >
 
->>>>>>> websitedesign
 </head>
 
 <body>
-<<<<<<< HEAD
     <form>
         <p>
             <label>Scale by
                 <select id="field"></select>
             </label>
         </p>
-=======
   <form>
     <p>
       <!-- Work on reformatting this -->
@@ -49,7 +44,6 @@ path:hover {
         </div>
 </div>
     </p>
->>>>>>> websitedesign
     </form>
     <svg width="960" height="600"></svg>
     <script>
@@ -97,7 +91,7 @@ path:hover {
 
             svg.append("path")
                 .attr("class", "county-borders")
-                .attr("d", path(topojson.mesh(us, us.objects.counties, function(a, b) {
+                .attr("d", path(topojson.mesh(us, us.objects[scale], function(a, b) {
                     return a !== b;
                 })));
         });
@@ -123,8 +117,4 @@ path:hover {
     parse_json();
     </script>
 </body>
-<<<<<<< HEAD
-
-=======
->>>>>>> websitedesign
 </html>
