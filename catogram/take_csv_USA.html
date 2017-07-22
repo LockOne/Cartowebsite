@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div id="container">
+    <div >
         <h1>Upload your own cartogram!</h1>
         <form>
             <p>
@@ -32,10 +32,10 @@
         </form>
         <div id="explanation">
             <p> Upload your usaData.csv file here!</p>
-            <p> One column of the csv must have the title "NAME", and the rows of that column must include:  (copy and paste!)</p>
-            <table>
+            <p> One column of the csv must have the title "NAME", and the rows of that column must include: (copy and paste!)</p>
+            <table style="text-align:left;">
                 <tr>
-                    <td><img display="inline-block" src="data/format_for_USA_csv.png"></td>
+                    <td><img display="inline-block" src="data/format_for_USA_csv.png" style="width:85%;"></td>
                     <td id="names">NAME
                         <br>Alabama
                         <br>Alaska
@@ -54,40 +54,40 @@
                         <br>Iowa
                         <br>Kansas
                         <br>Kentucky
-			<br>Louisiana
-			<br>Maine
-			<br>Maryland
-			<br>Massachusetts
-			<br>Michigan
-			<br>Minnesota
-			<br>Mississippi
-			<br>Missouri
-			<br>Montana
-			<br>Nebraska
-			<br>Nevada
-			<br>New Hampshire
-			<br>New Jersey
-			<br>New Mexico
-			<br>New York
-			<br>North Carolina
-			<br>North Dakota
-			<br>Ohio
-			<br>Oklahoma
-			<br>Oregon
-			<br>Pennsylvania
-			<br>Rhode Island
-			<br>South Carolina
-			<br>South Dakota
-			<br>Tennessee
-			<br>Texas
-			<br>Utah
-			<br>Vermont
-			<br>Virginia
-			<br>Washington
-			<br>West Virginia
-			<br>Wisconsin
-			<br>Wyoming
-		    </td>
+                        <br>Louisiana
+                        <br>Maine
+                        <br>Maryland
+                        <br>Massachusetts
+                        <br>Michigan
+                        <br>Minnesota
+                        <br>Mississippi
+                        <br>Missouri
+                        <br>Montana
+                        <br>Nebraska
+                        <br>Nevada
+                        <br>New Hampshire
+                        <br>New Jersey
+                        <br>New Mexico
+                        <br>New York
+                        <br>North Carolina
+                        <br>North Dakota
+                        <br>Ohio
+                        <br>Oklahoma
+                        <br>Oregon
+                        <br>Pennsylvania
+                        <br>Rhode Island
+                        <br>South Carolina
+                        <br>South Dakota
+                        <br>Tennessee
+                        <br>Texas
+                        <br>Utah
+                        <br>Vermont
+                        <br>Virginia
+                        <br>Washington
+                        <br>West Virginia
+                        <br>Wisconsin
+                        <br>Wyoming
+                    </td>
                 </tr>
             </table>
         </div>
@@ -97,12 +97,6 @@
             </form>
             <svg id="map"></svg>
         </div>
-        <canvas id="mycanvas"></canvas>
-        <button type="button" onclikc="save">save as image</button>
-        <a href="kor_topojson.html"> Korea map data </a>
-        <br/>
-        <a href="usa_counties.html"> USA Counties </a>
-        <br/>
     </div>
     <script src="js/main_csv.js"></script>
 </body>
