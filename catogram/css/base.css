@@ -12,59 +12,63 @@ body {
     background-color: #0277BD;
 }
 
-#navigator{
-    width: 22%;
-    left:12%;
-    position:static;
-    float:left;
-    height: 700px;
-    background-color: #81D4FA;
-    margin-left:12%;
-}
-
-#container {
-    width: 50%;
-    height:700px;
-    margin: 0;
-    position: static;
-    left: 37%;
-    margin-left:37%;
-    background-color: #81d4fa;
-    padding: 10px;
-}
-/*Styles the main header (Visual Data Studio)*/
-
 #header {
-    position:static;
-    left:12%;
-    top:30px;
+    position: static;
+    left: 12%;
+    top: 30px;
     width: 100%;
     height: 100px;
     margin-top: 30px;
     margin-left: 12%;
 }
 
-#header > p {
+#header>p {
     font-size: 40px;
     font-family: Consolas, monaco, monospace;
     color: white;
     position: relative;
-    top:30%;
-    left:20px;
-    margin:0;
+    top: 30%;
+    left: 20px;
+    margin: 0;
+}
+
+#navigator {
+    width: 17%;
+    left: 12%;
+    position: static;
+    float: left;
+    height: 700px;
+    background-color: #81D4FA;
+    margin-left: 12%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#container {
+    width: 57%;
+    height: 700px;
+    margin: 0;
+    position: static;
+    margin-left: 30%;
+    background-color: #81d4fa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    overflow: hidden;
 }
 
 form,
 form>* {
     margin: 0;
+    margin-bottom: 10px;
 }
 
 #map-container {
-    height: 600px;
+    height: 500px;
     text-align: center;
-    position: static;
-    margin: 0;
-    margin-top: 10px;
+    position: absolute;
+    width: 50%;
+    margin-left: 4%;
+    margin-top: 20px;
 }
 
 #map {
@@ -95,16 +99,38 @@ select {
 }
 
 
+#left_btn,
+#right_btn {
+    height: 700px;
+    width: 15%;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+#left_btn {
+    float: left;
+}
+
+#right_btn {
+    right: 0;
+    float: right;
+}
+
+
 
 
 /*Styles the tabs on the top of the screen*/
-.dropbtn{
-    width:100%;
+
+.dropbtn {
+    width: 100%;
 }
+
 .dropbtn a {
-    color:white;
+    color: white;
     text-decoration: none;
 }
+
 .dropbtn,
 .scalebtn,
 .yearbtn {
@@ -125,8 +151,12 @@ select {
 }
 
 .dropdown {
-    width:100%;
+    width: 100%;
 }
+
+
+
+
 
 
 /*Styles the background of the dropdown content*/
@@ -147,5 +177,25 @@ select {
     display: block;
 }
 
+.dropdown-content div {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content div:hover {
+    background-color: #b3e5fc;
+    cursor: pointer;
+}
+
+
 
 /* End of tab styling */
+
+.container_btn {
+    display: inline-block;
+    position:relative;
+    margin-top:300px;
+    width: 50%;
+}

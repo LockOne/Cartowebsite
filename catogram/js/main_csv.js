@@ -181,7 +181,6 @@
                  }
                  parsed_data.push(temp_Object);
              }
-             console.log(parsed_data[0]);
              years = [];
              var years_parsed = Object.keys(parsed_data[0]);
              for (var i = 0; i < years_parsed.length; i++) {
@@ -191,7 +190,6 @@
                      years.push(parseInt(years_parsed[i].substr(4, 15)));
                  }
              }
-             console.log(years);
              dataById = d3.nest()
                  .key(function(d) {
                      return d.NAME;
@@ -250,10 +248,12 @@
          })
          .text(function(y) {
              return y;
-         })
+         });
+
      map = d3.select("#map");
      layer = map.append("g")
          .attr("id", "layer");
+
      states = layer.append("g")
          .attr("id", "states")
          .selectAll("path");

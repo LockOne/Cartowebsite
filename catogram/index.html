@@ -13,6 +13,7 @@
     <script src="lib/jquery-3.2.1.min.js"></script>
     <link href="css/base.css" type="text/css" rel="stylesheet">
     <link href="css/w3-colors-windows.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -24,37 +25,38 @@
             <div id="dropbtn_1" class="dropbtn_container">
                 <button class="dropbtn">Other Countries</button>
                 <div class="dropdown-content">
-                    <a href="">USA </a>
-                    <a href="kor_topojson.html"> South Korea </a>
+                    <div class="fieldbtn">USA</div>
+                    <div class="fieldbtn">South Korea</div>
+                    <div class="fieldbtn">China</div>
+                    <div class="fieldbtn">...</div>
                     <a href="usa_counties.html"> USA - Counties </a>
                 </div>
             </div>
             <div id="dropbtn_2" class="dropbtn_container">
-                <button class="dropbtn"> <a href="take_csv.html">Want to make your own cartogram?</a></button>
+                <button class="dropbtn"> <a href="take_csv.html">Cartogram customization</a></button>
             </div>
         </div>
     </div>
     <div id="container">
-        <form>
-            <p>
-                <label>Scale by
-                    <select id="field"></select>
-                </label>
-                <label>in
-                    <select id="year"></select>
-                </label>
-                <input type="button" onclick="year_iter()" id="year_button" value="year iteration"></input>
-                <input type="button" onclick="carto_animation()" id="animation_button" value="cartogram animation"></input>
-                <!-- <div class="scaledropdown">
-         <button class="scalebtn">Scale by <select id="field"></select></button>
-       </div>
-       <div class="yeardropdown">
-             <button class = "yearbtn">Year <select id="year"></select></button>
-           </div>
-             -->
-            </p>
-        </form>
+        <div id="left_btn">
+            <div class="container_btn"><i class="material-icons" style="font-size:40px;color:#bdbdbd;">navigate_before</i></div>
+        </div>
+        <div id="right_btn">
+            <div class="container_btn"><i class="material-icons" style="font-size:40px;color:#bdbdbd;">navigate_next</i></div>
+        </div>
         <div id="map-container">
+            <form>
+                <p>
+                    <label>Scale by
+                        <select id="field"></select>
+                    </label>
+                    <label>in
+                        <select id="year"></select>
+                    </label>
+                    <input type="button" onclick="year_iter()" id="year_button" value="year iteration"></input>
+                    <input type="button" onclick="carto_animation()" id="animation_button" value="cartogram animation"></input>
+                </p>
+            </form>
             <svg id="map"></svg>
         </div>
     </div>
