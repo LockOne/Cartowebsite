@@ -1,9 +1,46 @@
  // hide the form if the browser doesn't do SVG,
  // (then just let everything else fail)
+
  if (!document.createElementNS) {
      document.getElementsByTagName("form")[0].style.display = "none";
  }
 
+ $(document).ready(function() {
+     var dropbtn_1 = $('#dropbtn_1');
+     var dropbtn_2 = $('#dropbtn_2');
+     var drop_content = $('.dropdown-content');
+
+     dropbtn_1.on({
+         mouseover: function() {
+             $(this).find("button").css("background-color", "#039be5");
+             drop_content.css("display", "block");
+         },
+         mouseout: function() {
+             $(this).find("button").css("background-color", "#4fc3f7");
+             drop_content.css("display", "none");
+         }
+     });
+
+     drop_content.find("a").on({
+         mouseover: function() {
+             $(this).css("background-color", "#b3e5fc");
+
+         },
+         mouseout: function() {
+             $(this).css("background-color", "#e1f5fe");
+         }
+
+     });
+
+     dropbtn_2.on({
+         mouseover: function() {
+             $(this).find("button").css("background-color", "#039be5");
+         },
+         mouseout: function() {
+             $(this).find("button").css("background-color", "#4fc3f7");
+         }
+     });
+ });
  var year_timer = false,
      carto_timer = false,
      idx = 0,
@@ -13,7 +50,7 @@
      if (year_timer) {
          clearTimeout(year_timer);
          year_timer = false;
-         document.getElementById("year_button").value = "year_iteration";
+         document.getElementById("year_button").value = "year iteration";
 
      } else {
          year_timer = setInterval(year_iteration, 500);
@@ -152,7 +189,7 @@
  var map = d3.select("#map"),
      zoom = d3.behavior.zoom()
      .translate([-38, 32])
-     .scale(.94)
+     .scale(.80)
      .scaleExtent([0.5, 10.0])
      .on("zoom", updateZoom),
      layer = map.append("g")

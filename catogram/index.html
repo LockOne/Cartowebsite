@@ -10,13 +10,31 @@
     <script src="lib/colorbrewer.js"></script>
     <script src="lib/topojson.js"></script>
     <script src="js/cartogram.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
     <link href="css/base.css" type="text/css" rel="stylesheet">
     <link href="css/w3-colors-windows.css" type="text/css" rel="stylesheet">
 </head>
 
 <body>
-    <h1>Visual Data Studio</h1>
-    <div id="container">  
+    <div id="header">
+        <p>Visual Data Studio</p>
+    </div>
+    <div id="navigator">
+        <div class="dropdown">
+            <div id="dropbtn_1" class="dropbtn_container">
+                <button class="dropbtn">Other Countries</button>
+                <div class="dropdown-content">
+                    <a href="">USA </a>
+                    <a href="kor_topojson.html"> South Korea </a>
+                    <a href="usa_counties.html"> USA - Counties </a>
+                </div>
+            </div>
+            <div id="dropbtn_2" class="dropbtn_container">
+                <button class="dropbtn"> <a href="take_csv.html">Want to make your own cartogram?</a></button>
+            </div>
+        </div>
+    </div>
+    <div id="container">
         <form>
             <p>
                 <label>Scale by
@@ -34,24 +52,13 @@
              <button class = "yearbtn">Year <select id="year"></select></button>
            </div>
              -->
-                <div class="dropdown">
-                    <button class="dropbtn">Other Countries</button>
-                    <div class="dropdown-content">
-                        <a href="kor_topojson.html"> Korea </a>
-                        <a href="usa_counties.html"> USA - Counties </a>
-                        <a href="take_csv.html">Want to make your own cartogram?</a>
-                    </div>
-                </div>
             </p>
         </form>
         <div id="map-container">
-            <img id="placeholder" alt="placeholder image for old browsers" src="placeholder.png">
             <svg id="map"></svg>
         </div>
     </div>
-
-<script src="js/main.js"></script>
-
+    <script src="js/main.js"></script>
 </body>
 
 </html>
