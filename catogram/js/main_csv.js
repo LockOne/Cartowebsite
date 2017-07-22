@@ -4,13 +4,6 @@
      document.getElementsByTagName("form")[0].style.display = "none";
  }
 
-
- var canvas = document.querySelector("canvas"),
-     context = canvas.getContext("2d");
-
- function save() {
-     window.open('', document.getElementById('mycanvas').toDataURL());
- }
  // field definitions from:
  // <http://www.census.gov/popest/data/national/totals/2011/files/NST-EST2011-alldata.pdf>
  var percent = (function() {
@@ -80,6 +73,7 @@
      }
      inputElement.style.display = "none";
      document.getElementById("explanation").style.display = "none";
+     document.getElementById("map-container").style.display = "block";
      csv_file = fileList[0];
 
      parse_csv(csv_file, parse_json);
@@ -181,7 +175,6 @@
                  }
                  parsed_data.push(temp_Object);
              }
-             console.log(parsed_data[0]);
              years = [];
              var years_parsed = Object.keys(parsed_data[0]);
              for (var i = 0; i < years_parsed.length; i++) {
@@ -191,7 +184,6 @@
                      years.push(parseInt(years_parsed[i].substr(4, 15)));
                  }
              }
-             console.log(years);
              dataById = d3.nest()
                  .key(function(d) {
                      return d.NAME;
@@ -250,10 +242,12 @@
          })
          .text(function(y) {
              return y;
-         })
+         });
+
      map = d3.select("#map");
      layer = map.append("g")
          .attr("id", "layer");
+
      states = layer.append("g")
          .attr("id", "states")
          .selectAll("path");
