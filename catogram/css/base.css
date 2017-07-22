@@ -118,6 +118,8 @@ select {
 }
 
 
+
+
 /*Styles the tabs on the top of the screen*/
 
 .dropbtn {
@@ -151,6 +153,14 @@ select {
     width: 100%;
 }
 
+
+#names {
+    font-size: 14px;
+    line-height: 90%;
+}
+
+
+
 /*Styles the background of the dropdown content*/
 
 .dropdown-content {
@@ -179,6 +189,8 @@ select {
     background-color: #b3e5fc;
     cursor: pointer;
 }
+
+
 
 /* End of tab styling */
 

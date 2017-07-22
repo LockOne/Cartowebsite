@@ -4,6 +4,100 @@
      document.getElementsByTagName("form")[0].style.display = "none";
  }
 
+ var current = 0;
+
+ $(document).ready(function() {  //JQuery Library is ready to use
+     var countrybtn_1 = $("#country_btn_1");
+     var countrybtn_2 = $("#country_btn_2");
+
+     function changeField(num) {
+         svg.selectAll("*").remove();
+         url = urls[num];
+         year = years[0];
+         field = fields[0];
+         projection = projections[num];
+     }
+
+     //Define functions for when the button is clicked.
+     countrybtn_1.on({
+         click: function() {
+             document.getElementById("USA").style.display = "block";
+             document.getElementById("korea").style.display = "none";
+             document.getElementById("explanation").style.display = "block";
+             document.getElementById("input_USA").style.display = "block";
+             svg.selectAll("*").remove();
+             current = 0;
+             changeField(current);
+             document.getElementById("map-container").style.display = "none";
+
+         }
+     });
+
+     countrybtn_2.on({
+         click: function() {
+             document.getElementById("USA").style.display = "none";
+             document.getElementById("korea").style.display = "block";
+             document.getElementById("explanation_2").style.display = "block";
+             document.getElementById("input_korea").style.display = "block";
+             document.getElementById("map-container").style.display = "none";
+             svg.selectAll("*").remove();
+
+             current = 1;
+             changeField(current);
+         }
+     });
+ });
+
+ var year_timer = false,
+     carto_timer = false,
+     idx = 0,
+     field_selected = 0;
+
+ function year_iter() {
+     if (year_timer) {
+         clearTimeout(year_timer);
+         year_timer = false;
+         document.getElementById("year_button").value = "year iteration";
+
+     } else {
+         year_timer = setInterval(year_iteration, 600);
+         document.getElementById("year_button").value = "Stop";
+     }
+ }
+
+ function year_iteration() {
+     year = years[idx];
+     location.hash = "#" + [field.id, year].join("/");
+     parseHash();
+     idx += 1;
+     if (idx == years.length) {
+         idx = 0;
+     }
+ }
+
+ function carto_animation() {
+     if (carto_timer) {
+         clearTimeout(carto_timer);
+         carto_timer = false;
+         document.getElementById("animation_button").value = "cartogram animation";
+     } else {
+         field_selected = document.getElementById("field").selectedIndex
+         carto_timer = setInterval(carto_animation_iteration, 1000);
+         document.getElementById("animation_button").value = "Stop";
+     }
+ }
+
+ function carto_animation_iteration() {
+     if (document.getElementById("field").selectedIndex == 0) {
+         field = fields[field_selected];
+     } else {
+         field = fields[0];
+     }
+
+     console.log(field_selected);
+     location.hash = "#" + [field.id, year].join("/");
+     parseHash();
+ }
  // field definitions from:
  // <http://www.census.gov/popest/data/national/totals/2011/files/NST-EST2011-alldata.pdf>
  var percent = (function() {
@@ -18,7 +112,6 @@
          { name: "(no scale)", id: "none" },
          { name: "My Data", id: "mydata", key: "DATA%d" }
      ],
-
      years = [2012, 2013, 2014, 2015, 2016, 2017],
 
      fieldsById = d3.nest()
@@ -37,6 +130,7 @@
      .map(function(rgb) {
          return d3.hsl(rgb);
      });
+
  var fieldSelect, yearSelect;
 
  var body = d3.select("body"),
@@ -62,10 +156,12 @@
      alert('The File APIs are not fully supported in this browser.');
  }
 
- var inputElement = document.getElementById("input");
+ var inputElement = document.getElementById("input_USA");
  inputElement.addEventListener("change", handleFiles, false);
+ var inputElement_2 = document.getElementById("input_korea");
+ inputElement_2.addEventListener("change", handleFiles_2, false);
 
- //This function handles the uploaded csv file by the user, for the map Korea.
+ //This function handles the uploaded csv file by the user, for the map USA and Korea respectively.
  function handleFiles() {
      var fileList = this.files;
      if (fileList == undefined) {
@@ -73,6 +169,19 @@
      }
      inputElement.style.display = "none";
      document.getElementById("explanation").style.display = "none";
+     document.getElementById("map-container").style.display = "block";
+     csv_file = fileList[0];
+
+     parse_csv(csv_file, parse_json);
+ }
+
+ function handleFiles_2() {
+     var fileList = this.files;
+     if (fileList == undefined) {
+         return;
+     }
+     inputElement_2.style.display = "none";
+     document.getElementById("explanation_2").style.display = "none";
      document.getElementById("map-container").style.display = "block";
      csv_file = fileList[0];
 
@@ -105,8 +214,8 @@
          "translate(" + zoom.translate() + ") " +
          "scale(" + [scale, scale] + ")");
  }
- var width = 960,
-     height = 600,
+ var width = 700,
+     height = 500,
      initialScale = 50,
      initialX = width / 2,
      initialY = height / 2,
@@ -119,11 +228,16 @@
  //This coordinate is specified with .center()
  //A higher scale() will zoom in.
  //.translate is horizontal and vertical shift. A value is put in to center the screen on the map.
- //
- var projection = d3.geo.mercator()
+
+console.log(width);
+console.log(height);
+ var projections = [d3.geo.albersUsa().scale(900).translate([width / 2, height / 2]), d3.geo.mercator()
      .center([128, 36]) //latitude and longitude
      .scale(4000)
-     .translate([width / 2, height / 2]);
+     .translate([width / 2, height / 2])
+ ];
+
+ var projection = projections[0];
 
  var topology,
      geometries,
@@ -144,7 +258,8 @@
  //This url specifies a (relative) path to the json file that describes the map/shape of south korea.
  //The json file consists of an id string for each region and the arcs that makes it up.
  //
- var url = "data/korea.json"
+ var urls = ["data/us-states.topojson", "data/korea.json"];
+ var url = urls[0];
 
  var path = d3.geo.path()
      .projection(projection);
@@ -153,8 +268,7 @@
 
  //parse_json takes in the entire text string of the csv file
  function parse_json(str) {
-
-     svg.selectAll("*").remove(); //make new map by removing previous information
+     //make new map by removing previous information
 
      if (str == undefined) {} else {
 
@@ -203,55 +317,58 @@
      parseHash();
  };
 
+
  function init() {
 
      var features = carto.features(topology, geometries),
          path = d3.geo.path()
          .projection(projection);
 
+     carto = d3.cartogram() //cartogram starts.
+         .projection(projection)
+         .properties(function(d) {
+             return dataById[d.id];
+         })
+         .value(function(d) {
+             return +d.properties[field];
+         });
      fieldSelect = d3.select("#field")
          .on("change", function(e) {
              field = fields[this.selectedIndex];
              location.hash = "#" + [field.id, year].join("/");
          });
+     fieldsById = d3.nest()
+         .key(function(d) { return d.id; })
+         .rollup(function(d) { return d[0]; })
+         .map(fields);
 
-     //when you change field
+
      fieldSelect.selectAll("option")
          .data(fields)
          .enter()
          .append("option")
-         .attr("value", function(d) {
-             return d.id;
-         })
-         .text(function(d) {
-             return d.name;
-         });
-
+         .attr("value", function(d) { return d.id; })
+         .text(function(d) { return d.name; });
      yearSelect = d3.select("#year")
          .on("change", function(e) {
              year = years[this.selectedIndex];
              location.hash = "#" + [field.id, year].join("/");
          });
-
      yearSelect.selectAll("option")
          .data(years)
          .enter()
          .append("option")
-         .attr("value", function(y) {
-             return y;
-         })
-         .text(function(y) {
-             return y;
-         });
+         .attr("value", function(y) { return y; })
+         .text(function(y) { return y; });
 
      map = d3.select("#map");
+
      layer = map.append("g")
          .attr("id", "layer");
 
      states = layer.append("g")
          .attr("id", "states")
          .selectAll("path");
-
      states = states.data(features)
          .enter()
          .append("path")
