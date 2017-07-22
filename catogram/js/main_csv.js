@@ -6,7 +6,7 @@
 
  var current = 0;
 
- $(document).ready(function() {
+ $(document).ready(function() {  //JQuery Library is ready to use
      var countrybtn_1 = $("#country_btn_1");
      var countrybtn_2 = $("#country_btn_2");
 
@@ -18,6 +18,7 @@
          projection = projections[num];
      }
 
+     //Define functions for when the button is clicked.
      countrybtn_1.on({
          click: function() {
              document.getElementById("USA").style.display = "block";
@@ -59,7 +60,7 @@
          document.getElementById("year_button").value = "year iteration";
 
      } else {
-         year_timer = setInterval(year_iteration, 500);
+         year_timer = setInterval(year_iteration, 600);
          document.getElementById("year_button").value = "Stop";
      }
  }
@@ -81,7 +82,7 @@
          document.getElementById("animation_button").value = "cartogram animation";
      } else {
          field_selected = document.getElementById("field").selectedIndex
-         carto_timer = setInterval(carto_animation_iteration, 800);
+         carto_timer = setInterval(carto_animation_iteration, 1000);
          document.getElementById("animation_button").value = "Stop";
      }
  }
@@ -160,7 +161,7 @@
  var inputElement_2 = document.getElementById("input_korea");
  inputElement_2.addEventListener("change", handleFiles_2, false);
 
- //This function handles the uploaded csv file by the user, for the map Korea.
+ //This function handles the uploaded csv file by the user, for the map USA and Korea respectively.
  function handleFiles() {
      var fileList = this.files;
      if (fileList == undefined) {
@@ -227,9 +228,6 @@
  //This coordinate is specified with .center()
  //A higher scale() will zoom in.
  //.translate is horizontal and vertical shift. A value is put in to center the screen on the map.
- //
-//width = document.getElementById("map").offsetWidth;
-//height = document.getElementById("map").offsetHeight;
 
 console.log(width);
 console.log(height);
