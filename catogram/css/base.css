@@ -132,7 +132,6 @@ select {
 .dropbtn,
 .scalebtn,
 .yearbtn {
-    /*  background-color: #4CAF50;*/
     color: #fff;
     background-color: #4fc3f7;
     padding: 16px;
@@ -157,7 +156,6 @@ select {
 .dropdown-content {
     display: none;
     position: static;
-    /*background-color: #f9f9f9; */
     background-color: #e1f5fe;
     min-width: 160px;
     z-index: 1;
