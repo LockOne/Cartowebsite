@@ -1,8 +1,101 @@
  // hide the form if the browser doesn't do SVG,
  // (then just let everything else fail)
+
  if (!document.createElementNS) {
      document.getElementsByTagName("form")[0].style.display = "none";
  }
+ var svg = d3.select("svg");
+
+ $(document).ready(function() {
+     var dropbtn_1 = $('#dropbtn_1');
+     var dropbtn_2 = $('#dropbtn_2');
+     var drop_content = $('.dropdown-content');
+     var left_btn = $('#left_btn');
+     var right_btn = $('#right_btn');
+     var fieldbtn = $('.fieldbtn');
+     var current = 0;
+
+     function changeField(num) {
+         svg.selectAll("*").remove();
+         url = urls[num];
+         csv = csvs[num];
+         years = years_list[num];
+         fields = fields_list[num];
+         year = years[0];
+         field = fields[0];
+         proj = projections[num];
+
+         location.hash = "#" + [field.id, year].join("/");
+         parseHash();
+
+         make_json();
+     }
+
+     fieldbtn.on({
+         click: function() {
+             current = $(this).index();
+             changeField(current);
+         }
+     });
+
+     left_btn.on({
+         mouseover: function() {
+             $(this).css("background-color", "rgba(255,255,255,0.4)");
+         },
+         mouseout: function() {
+             $(this).css("background-color", "rgba(255,255,255,0)");
+         },
+         click: function() {
+             current--;
+             if (current < 0) { current = fields_list.length - 1; }
+             changeField(current);
+         }
+     });
+
+     right_btn.on({
+         mouseover: function() {
+             $(this).css("background-color", "rgba(255,255,255,0.4)");
+         },
+         mouseout: function() {
+             $(this).css("background-color", "rgba(255,255,255,0)");
+         },
+         click: function() {
+             current++;
+             if (current == fields_list.length) { current = 0; }
+             changeField(current);
+         }
+     });
+
+
+     dropbtn_1.on({
+         mouseover: function() {
+             $(this).find("button").css("background-color", "#039be5");
+             drop_content.css("display", "block");
+         },
+         mouseout: function() {
+             $(this).find("button").css("background-color", "#4fc3f7");
+             drop_content.css("display", "none");
+         }
+     });
+
+     drop_content.find("a").on({
+         mouseover: function() {
+             $(this).css("background-color", "#b3e5fc");
+         },
+         mouseout: function() {
+             $(this).css("background-color", "#e1f5fe");
+         }
+     });
+
+     dropbtn_2.on({
+         mouseover: function() {
+             $(this).find("button").css("background-color", "#039be5");
+         },
+         mouseout: function() {
+             $(this).find("button").css("background-color", "#4fc3f7");
+         }
+     });
+ });
 
  var year_timer = false,
      carto_timer = false,
@@ -13,7 +106,7 @@
      if (year_timer) {
          clearTimeout(year_timer);
          year_timer = false;
-         document.getElementById("year_button").value = "year_iteration";
+         document.getElementById("year_button").value = "year iteration";
 
      } else {
          year_timer = setInterval(year_iteration, 500);
@@ -85,42 +178,32 @@
          { name: "(no scale)", id: "none" },
          { name: "Population Estimate", id: "popest", key: "POP%d" }
      ],
-
+     china = [
+         { name: "(no scale)", id: "none" },
+         { name: "Population Estimate", id: "popest", key: "POP%d" }
+     ],
+     urls = ["data/us-states.topojson", "data/korea.json", "data/china.json"],
      fields_list = [
-         usa,
-         korea
+         usa,korea,china
      ],
-     countries = [
-         { name: "the USA", id: "usa" },
-         { name: "Republic of Korea", id: "s_korea" }
-     ],
+     csvs = ["data/nst_2011.csv", "data/korea.csv","data/china.csv"],
      years_usa = [2010, 2011],
      years_korea = [2012, 2013, 2014, 2015, 2016],
-     years_list = [years_usa, years_korea],
+     years_china = [2001,2002,2003,2004],
+     years_list = [years_usa, years_korea,years_china],
      years = years_list[0],
      fields = fields_list[0],
      fieldsById = d3.nest()
      .key(function(d) { return d.id; })
      .rollup(function(d) { return d[0]; })
      .map(fields),
-     country = countries[0],
      field = fields[0],
      year = years[0],
      colors = colorbrewer.RdYlBu[3]
      .reverse()
      .map(function(rgb) { return d3.hsl(rgb); });
 
- var body = d3.select("body"),
-     stat = d3.select("#status");
-
- //initial setting on country
- var CountrySelect = d3.select("#country")
-     .on("change", function(e) {
-         fields = fields_list[this.selectedIndex];
-         years = years_list[this.selectedIndex];
-         field = fields[0];
-         location.hash = "#" + [field.id, year].join("/");
-     });
+ var body = d3.select("body");
 
  var fieldSelect = d3.select("#field")
      .on("change", function(e) {
@@ -152,7 +235,7 @@
  var map = d3.select("#map"),
      zoom = d3.behavior.zoom()
      .translate([-38, 32])
-     .scale(.94)
+     .scale(.80)
      .scaleExtent([0.5, 10.0])
      .on("zoom", updateZoom),
      layer = map.append("g")
@@ -170,8 +253,13 @@
          "translate(" + zoom.translate() + ") " +
          "scale(" + [scale, scale] + ")");
  }
+ var width = 726,
+     height = 500;
 
- var proj = d3.geo.albersUsa(), //set projection of cartogram, topojson
+ var projections = [d3.geo.albersUsa().scale(900).translate([width / 2, height / 2]),
+                    d3.geo.mercator().center([128, 36]).scale(4000).translate([width / 2, height / 2]),
+                    d3.geo.mercator().center([105,38]).scale(500).translate([width/2,height/2])];
+ var proj = projections[0], //set projection of cartogram, topojson
      topology,
      geometries,
      rawData,
@@ -191,15 +279,15 @@
      parseHash();
  };
 
- var url = "data/us-states.topojson"; //usually use "data/us-states.topojson" (we don't need segmentized)
+ var url = "data/us-states.topojson";
+ var csv = "data/nst_2011.csv";
 
- //url ="https://d3js.org/us-10m.v1.json";
  function make_json() {
      d3.json(url, function(topo) { //take topo json file
          topology = topo;
          geometries = topology.objects.states.geometries;
 
-         d3.csv("data/nst_2011.csv", function(data) { //take csv file.
+         d3.csv(csv, function(data) { //take csv file.
              rawData = data;
              dataById = d3.nest()
                  .key(function(d) { return d.NAME; })
@@ -218,6 +306,43 @@
          path = d3.geo.path()
          .projection(proj);
 
+     carto = d3.cartogram() //cartogram starts.
+         .projection(proj)
+         .properties(function(d) {
+             return dataById[d.id];
+         })
+         .value(function(d) {
+             return +d.properties[field];
+         });
+
+     fieldSelect.selectAll("option").remove();
+     yearSelect.selectAll("option").remove();
+     fieldsById = d3.nest()
+         .key(function(d) { return d.id; })
+         .rollup(function(d) { return d[0]; })
+         .map(fields);
+     fieldSelect.selectAll("option")
+         .data(fields)
+         .enter()
+         .append("option")
+         .attr("value", function(d) { return d.id; })
+         .text(function(d) { return d.name; });
+
+     yearSelect.selectAll("option")
+         .data(years)
+         .enter()
+         .append("option")
+         .attr("value", function(y) { return y; })
+         .text(function(y) { return y; });
+
+     map = d3.select("#map");
+
+     layer = map.append("g")
+         .attr("id", "layer");
+
+     states = layer.append("g")
+         .attr("id", "states")
+         .selectAll("path");
      states = states.data(features)
          .enter()
          .append("path")
@@ -234,7 +359,6 @@
  }
 
  function reset() {
-     stat.text("");
      body.classed("updating", false);
 
      var features = carto.features(topology, geometries),
@@ -306,8 +430,6 @@
          })
          .attr("d", carto.path);
 
-     var delta = (Date.now() - start) / 1000;
-     stat.text(["calculated in", delta.toFixed(1), "seconds"].join(" "));
      body.classed("updating", false);
  }
 
@@ -316,7 +438,6 @@
      return function() {
          var args = arguments;
          clearTimeout(timeout);
-         stat.text("calculating...");
          return timeout = setTimeout(function() {
              update.apply(null, arguments);
          }, 10);
