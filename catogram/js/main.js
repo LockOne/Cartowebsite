@@ -97,6 +97,8 @@
      });
  });
 
+
+ //For cartogram "animation" in temporal and warping
  var year_timer = false,
      carto_timer = false,
      idx = 0,
@@ -104,12 +106,14 @@
 
  function year_iter() {
      if (year_timer) {
+	 //when year_timer is true, clear the timer and stop the iteration
          clearTimeout(year_timer);
          year_timer = false;
          document.getElementById("year_button").value = "year iteration";
 
      } else {
-         year_timer = setInterval(year_iteration, 500);
+	 //For every 500 milliseconds, call the year_iteration() function
+         year_timer = setInterval(year_iteration, 600);
          document.getElementById("year_button").value = "Stop";
      }
  }
@@ -131,7 +135,7 @@
          document.getElementById("animation_button").value = "cartogram animation";
      } else {
          field_selected = document.getElementById("field").selectedIndex
-         carto_timer = setInterval(carto_animation_iteration, 800);
+         carto_timer = setInterval(carto_animation_iteration, 1000);
          document.getElementById("animation_button").value = "Stop";
      }
  }
