@@ -33,8 +33,8 @@
 
      fieldbtn.on({
          click: function() {
-            current = $(this).index();
-            changeField(current);
+             current = $(this).index();
+             changeField(current);
          }
      });
 
@@ -47,7 +47,7 @@
          },
          click: function() {
              current--;
-             if (current < 0) { current = countries.length - 1; }
+             if (current < 0) { current = fields_list.length - 1; }
              changeField(current);
          }
      });
@@ -61,7 +61,7 @@
          },
          click: function() {
              current++;
-             if (current == countries.length) { current = 0; }
+             if (current == fields_list.length) { current = 0; }
              changeField(current);
          }
      });
@@ -178,26 +178,25 @@
          { name: "(no scale)", id: "none" },
          { name: "Population Estimate", id: "popest", key: "POP%d" }
      ],
-     urls = ["data/us-states.topojson", "data/korea.json"],
+     china = [
+         { name: "(no scale)", id: "none" },
+         { name: "Population Estimate", id: "popest", key: "POP%d" }
+     ],
+     urls = ["data/us-states.topojson", "data/korea.json", "data/china.json"],
      fields_list = [
-         usa,
-         korea
+         usa,korea,china
      ],
-     countries = [
-         { name: "the USA", id: "usa" },
-         { name: "Republic of Korea", id: "s_korea" }
-     ],
-     csvs = ["data/nst_2011.csv", "data/korea.csv"],
+     csvs = ["data/nst_2011.csv", "data/korea.csv","data/china.csv"],
      years_usa = [2010, 2011],
      years_korea = [2012, 2013, 2014, 2015, 2016],
-     years_list = [years_usa, years_korea],
+     years_china = [2001,2002,2003,2004],
+     years_list = [years_usa, years_korea,years_china],
      years = years_list[0],
      fields = fields_list[0],
      fieldsById = d3.nest()
      .key(function(d) { return d.id; })
      .rollup(function(d) { return d[0]; })
      .map(fields),
-     country = countries[0],
      field = fields[0],
      year = years[0],
      colors = colorbrewer.RdYlBu[3]
@@ -257,7 +256,9 @@
  var width = 726,
      height = 500;
 
- var projections = [d3.geo.albersUsa().scale(900).translate([width / 2, height / 2]), d3.geo.mercator().center([128, 36]).scale(4000).translate([width / 2, height / 2])];
+ var projections = [d3.geo.albersUsa().scale(900).translate([width / 2, height / 2]),
+                    d3.geo.mercator().center([128, 36]).scale(4000).translate([width / 2, height / 2]),
+                    d3.geo.mercator().center([105,38]).scale(500).translate([width/2,height/2])];
  var proj = projections[0], //set projection of cartogram, topojson
      topology,
      geometries,
