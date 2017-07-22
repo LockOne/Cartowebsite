@@ -27,12 +27,11 @@
                 <label>in
                     <select id="year"></select>
                 </label>
-                <span id="status"></span>
             </p>
         </form>
-        <div id="explanation">
+        <div id="explanation" style="margin:10px;">
             <p> Upload your korea.csv file here!</p>
-            <p> One column of the csv must have the title "NAME", and the rows of that column must include:  (copy and paste!)</p>
+            <p> One column of the csv must have the title "NAME", and the rows of that column must include: (copy and paste!)</p>
             <table>
                 <tr>
                     <td><img display="inline-block" src="data/format_for_Korea_csv.png" width="450"></td>
@@ -57,18 +56,12 @@
                 </tr>
             </table>
         </div>
-        <div id="map-container">
-            <form>
-                <input type="file" id="input" onchange="handleFiles(this.files)" value="Browse">
-            </form>
+        <form>
+            <input type="file" id="input" onchange="handleFiles(this.files)" value="Browse">
+        </form>
+        <div id="map-container" style="display:none;">
             <svg id="map"></svg>
         </div>
-        <canvas id="mycanvas"></canvas>
-        <button type="button" onclikc="save">save as image</button>
-        <a href="kor_topojson.html"> Korea map data </a>
-        <br/>
-        <a href="usa_counties.html"> USA Counties </a>
-        <br/>
     </div>
     <script src="js/main_csv.js"></script>
 </body>
