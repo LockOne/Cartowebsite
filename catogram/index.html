@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visual Data Studio</title>
+    <meta charset="utf-8">
+    <meta property="og:image" content="placeholder.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="lib/d3.v3.min.js"></script>
+    <script src="lib/colorbrewer.js"></script>
+    <script src="lib/topojson.js"></script>
+    <script src="js/cartogram.js"></script>
+    <script src="lib/jquery-3.2.1.min.js"></script>
+    <link href="css/base.css" type="text/css" rel="stylesheet">
+    <link href="css/w3-colors-windows.css" type="text/css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <div id="header">
+        <p>Visual Data Studio</p>
+    </div>
+    <div id="navigator">
+        <div class="dropdown">
+            <div id="dropbtn_1" class="dropbtn_container">
+                <button class="dropbtn">Other Countries</button>
+                <div class="dropdown-content">
+                    <div class="fieldbtn">USA</div>
+                    <div class="fieldbtn">South Korea</div>
+                    <div class="fieldbtn">China</div>
+                    <div class="fieldbtn">...</div>
+                    <a href="usa_counties.html"> USA - Counties </a>
+                </div>
+            </div>
+            <div id="dropbtn_2" class="dropbtn_container">
+                <button class="dropbtn" type="button" onclick="location.href='take_csv.html';"> Cartogram customization</button>
+            </div>
+        </div>
+    </div>
+    <div id="container">
+        <div id="left_btn">
+            <div class="container_btn"><i class="material-icons" style="font-size:40px;color:#bdbdbd;">navigate_before</i></div>
+        </div>
+        <div id="right_btn">
+            <div class="container_btn"><i class="material-icons" style="font-size:40px;color:#bdbdbd;">navigate_next</i></div>
+        </div>
+        <div id="map-container">
+            <form>
+                <p>
+                    <label>Scale by
+                        <select id="field"></select>
+                    </label>
+                    <label>in
+                        <select id="year"></select>
+                    </label>
+		    <br>
+                    <input type="button" onclick="year_iter()" id="year_button" value="year iteration"></input>
+                    <input type="button" onclick="carto_animation()" id="animation_button" value="cartogram animation"></input>
+                </p>
+            </form>
+            <svg id="map"></svg>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
