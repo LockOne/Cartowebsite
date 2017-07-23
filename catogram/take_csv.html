@@ -20,7 +20,8 @@
     </div>
 
     <div id="container" style="margin-left:12%;width:78%; height:1300px;padding:20px;">
-        <h1>Upload your own cartogram!</h1>
+        <h1>Make your own cartogram!</h1>
+	<p>Select a country template below:</p>
         <button type="button" id="country_btn_1">USA</button>
         <button type="button" id="country_btn_2">Korea</button>
 	<a href="index.html">Back to Menu</a>
@@ -45,7 +46,7 @@
                     <input type="file" id="input_USA" onchange="handleFiles(this.files)" value="Browse">
                 </form>
                 <p> One column of the csv must have the title "NAME", and the rows of that column must include the state names: (copy and paste on the right!)</p>
-		<p> The data columns must start with the string "DATA" immediately followed by a number to represent the year.</p>
+		<p> The data columns must start with the string "DATA" immediately followed by a number to represent the year (or any quantum of time).</p>
                 <table style="text-align:left;">
                     <tr>
                         <td><img display="inline-block" src="data/format_for_USA_csv.png" style="width:85%;"></td>
@@ -61,7 +62,7 @@
                     <input type="file" id="input_korea" onchange="handleFiles(this.files)" value="Browse">
                 </form>
                 <p> One column of the csv must have the title "NAME", and the rows of that column must include the regions: (copy and paste on the right!)</p>
-		<p> The data columns must start with the string "DATA" immediately followed by a number to represent the year.</p>
+		<p> The data columns must start with the string "DATA" immediately followed by a number to represent the year (or any quantum of time).</p>
                 <table>
                     <tr>
                         <td><img display="inline-block" src="data/format_for_Korea_csv.png" width="450"></td>
