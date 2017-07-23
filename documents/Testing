@@ -1,0 +1,30 @@
+UNIT TESTING:
+
+
+- TIM'S USA, KOREA, CHINA MODULE:
+Check the arrow buttons to see if they navigate through all three countries properly.
+Select a data type (e.g. population estimate) and see if the cartogram changes.
+Check the animation buttons one at a time to see if years are being iterated (year iteration button)
+and if the tab oscillates properly from (no scale) to the correct data (cartogram animation button).
+
+
+- UPLOAD CSV FOR USA AND KOREA MODULE:
+Click the "Cartogram customization" link to see if it correctly redirects to the take_csv webpage.
+Do the following tests for both USA and Korea::
+Copy-paste the provided column into Microsoft Excel, follow instructions, and save it as a CSV file.
+Upload the custom CSV file and see if the cartogram is configured.
+Repeat the testing in the "TIM's USA, KOREA, CHINA MODULE" section.
+
+
+- USA COUNTIES MODULE:
+Navigate to the "USA - Counties" section under the tab "Other Countries"
+Check if county lines are only being shown when the drop-down selects "counties".
+
+
+
+SYSTEM-WIDE TESTING:
+
+opened up a browser in both chrome and firefox and entered the DNS address
+tinyurl.com/visual-data-studio
+to see if it redirects properly to the IP address 52.79.81.229
+
