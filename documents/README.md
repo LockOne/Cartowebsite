@@ -1,7 +1,11 @@
-# Cartowebsite
-Code base for CMPS 115 Project teams.
-Open index.html in a browser to see the website:
-  1. Google chrome has issues running it (works for me through my IDE -Webstorm- using chrome)
-  2. Firefox should run it fine however
+//CMPS 115-01 Summer 2017
+//Project Name: Visual Data Studio; developed using the codebase of Tim Burkhart's project.
+//Team Name: Deer Squad
+//Team members: Javier Juanillo, Ahcheong Lee, Nathan Monahelis, Vivian Nguyen, Ching Lam Yung
 
-Main logic is in the index.html and the cartogram.js files. 
+The goal of this project is to improve and expand Tim's code and host it on a IP server.
+Our team's focus is on expanding the data sets and improving user interface, as well as
+having small scale animation on the cartograms.
+We left the details of the diffusion algorithm to the team in Session 2.
+
+The IP website shortened to http is:  tinyurl.com/visual-data-studio
