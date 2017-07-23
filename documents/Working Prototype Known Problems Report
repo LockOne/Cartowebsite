@@ -1,7 +1,10 @@
 //CMPS 115-01 Summer 2017
-//Project Name: Visual Data Studio; developed using the codebase of Tim Burkhart's project.
+//Product Name: Visual Data Studio;
+      //developed using the codebase of Tim Burkhart's project.
+
 //Team Name: Deer Squad
 //Team members: Javier Juanillo, Ahcheong Lee, Nathan Monahelis, Vivian Nguyen, Ching Lam Yung
+//Last Updated Date: 7/24/2017
 
 The goal of this project is to improve and expand Tim's code and host it on a IP server.
 Our team's focus is on expanding the data sets and improving user interface, as well as
@@ -10,4 +13,7 @@ We left the details of the diffusion algorithm to the team in Session 2.
 
 The IP website shortened to http is:  tinyurl.com/visual-data-studio
 
-more details in the report on Working Prototype.
+LIST of functions not working correctly:
+The USA Counties section of the website only has the function of displaying the
+state lines and county lines.
+It does not support creating a cartogram with built-in data nor uploaded data.
