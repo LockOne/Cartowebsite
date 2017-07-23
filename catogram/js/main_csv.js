@@ -11,7 +11,7 @@
      var countrybtn_2 = $("#country_btn_2");
 
      function changeField(num) {
-         svg.selectAll("*").remove();
+         svg.selectAll("g").remove();
          url = urls[num];
          year = years[0];
          field = fields[0];
@@ -25,7 +25,7 @@
              document.getElementById("korea").style.display = "none";
              document.getElementById("explanation").style.display = "block";
              document.getElementById("input_USA").style.display = "block";
-             svg.selectAll("*").remove();
+             svg.selectAll("g").remove();
              current = 0;
              changeField(current);
              document.getElementById("map-container").style.display = "none";
@@ -40,7 +40,7 @@
              document.getElementById("explanation_2").style.display = "block";
              document.getElementById("input_korea").style.display = "block";
              document.getElementById("map-container").style.display = "none";
-             svg.selectAll("*").remove();
+             svg.selectAll("g").remove();
 
              current = 1;
              changeField(current);
