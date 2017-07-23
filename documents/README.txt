@@ -5,7 +5,7 @@
 
 The goal of this project is to improve and expand Tim's code and host it on a IP server.
 Our team's focus is on expanding the data sets and improving user interface, as well as
-having small scale animation on the cartograms.
+having small scale simple animation on the cartograms.
 We left the details of the diffusion algorithm to the team in Session 2.
 
 The IP website shortened to http is:  tinyurl.com/visual-data-studio
