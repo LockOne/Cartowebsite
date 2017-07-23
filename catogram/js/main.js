@@ -16,7 +16,7 @@
      var current = 0;
 
      function changeField(num) {
-         svg.selectAll("*").remove();
+         svg.selectAll("g").remove();
          url = urls[num];
          csv = csvs[num];
          years = years_list[num];
@@ -106,13 +106,13 @@
 
  function year_iter() {
      if (year_timer) {
-	 //when year_timer is true, clear the timer and stop the iteration
+         //when year_timer is true, clear the timer and stop the iteration
          clearTimeout(year_timer);
          year_timer = false;
          document.getElementById("year_button").value = "year iteration";
 
      } else {
-	 //For every 500 milliseconds, call the year_iteration() function
+         //For every 500 milliseconds, call the year_iteration() function
          year_timer = setInterval(year_iteration, 600);
          document.getElementById("year_button").value = "Stop";
      }
@@ -188,13 +188,13 @@
      ],
      urls = ["data/us-states.topojson", "data/korea.json", "data/china.json"],
      fields_list = [
-         usa,korea,china
+         usa, korea, china
      ],
-     csvs = ["data/nst_2011.csv", "data/korea.csv","data/china.csv"],
+     csvs = ["data/nst_2011.csv", "data/korea.csv", "data/china.csv"],
      years_usa = [2010, 2011],
      years_korea = [2012, 2013, 2014, 2015, 2016],
-     years_china = [2001,2002,2003,2004],
-     years_list = [years_usa, years_korea,years_china],
+     years_china = [2001, 2002, 2003, 2004],
+     years_list = [years_usa, years_korea, years_china],
      years = years_list[0],
      fields = fields_list[0],
      fieldsById = d3.nest()
@@ -261,8 +261,9 @@
      height = 500;
 
  var projections = [d3.geo.albersUsa().scale(900).translate([width / 2, height / 2]),
-                    d3.geo.mercator().center([128, 36]).scale(4000).translate([width / 2, height / 2]),
-                    d3.geo.mercator().center([105,38]).scale(500).translate([width/2,height/2])];
+     d3.geo.mercator().center([128, 36]).scale(4000).translate([width / 2, height / 2]),
+     d3.geo.mercator().center([105, 38]).scale(500).translate([width / 2, height / 2])
+ ];
  var proj = projections[0], //set projection of cartogram, topojson
      topology,
      geometries,
