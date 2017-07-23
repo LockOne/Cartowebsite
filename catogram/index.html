@@ -53,12 +53,14 @@
                     <label>in
                         <select id="year"></select>
                     </label>
-		    <br>
+                    <br>
                     <input type="button" onclick="year_iter()" id="year_button" value="year iteration"></input>
                     <input type="button" onclick="carto_animation()" id="animation_button" value="cartogram animation"></input>
                 </p>
             </form>
-            <svg id="map"></svg>
+            <svg id="map">
+                <rect x="-10" y="-10" width="770" height="550" fill="#81d4fa" storke="#81d4fa" />
+            </svg>
         </div>
     </div>
     <script src="js/main.js"></script>
