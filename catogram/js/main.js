@@ -14,7 +14,6 @@
      var right_btn = $('#right_btn');
      var fieldbtn = $('.fieldbtn');
      var current = 0;
-
      function changeField(num) {
          svg.selectAll("g").remove();
          url = urls[num];
